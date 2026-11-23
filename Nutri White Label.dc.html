@@ -94,15 +94,15 @@ a:hover{color:var(--accent)}
 
 <!-- 02 HERO -->
 <sc-if value="{{ show.hero }}" hint-placeholder-val="{{ true }}">
-<section id="inicio" data-screen-label="Hero" style="order:{{ ord.hero }};scroll-margin-top:84px;padding:clamp(36px,6vw,80px) 0 clamp(96px,12vw,168px)">
-  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-wrap:wrap;gap:clamp(48px,6vw,96px);align-items:center">
-    <div style="flex:1 1 500px;min-width:0;display:flex;flex-direction:column;gap:28px">
-      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ hero.eyebrow }}</div>
-      <h1 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.02;font-size:clamp(2.6rem,5.4vw,5rem);margin:0;text-wrap:balance">{{ hero.title }}<em style="font-style:var(--em-style);color:var(--em-color)">{{ hero.titleEmphasis }}</em>{{ hero.titleAfter }}</h1>
-      <p style="margin:0;font-size:1.14rem;line-height:1.65;color:var(--muted);max-width:34em;text-wrap:pretty">{{ hero.description }}</p>
+<section id="inicio" data-screen-label="Hero" style="order:{{ ord.hero }};scroll-margin-top:84px;padding:clamp(40px,5vw,72px) 0 clamp(72px,9vw,120px)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-wrap:wrap;gap:clamp(40px,6vw,88px);align-items:flex-end">
+    <div style="flex:1.05 1 460px;min-width:0;display:flex;flex-direction:column;gap:24px;padding-bottom:clamp(0px,2vw,24px)">
+      <div style="font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:600">{{ hero.eyebrow }}</div>
+      <h1 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.04;font-size:clamp(2.4rem,4.4vw,4.1rem);margin:0;text-wrap:balance">{{ hero.title }}<em style="font-style:var(--em-style);color:var(--em-color)">{{ hero.titleEmphasis }}</em>{{ hero.titleAfter }}</h1>
+      <p style="margin:0;font-size:1.08rem;line-height:1.65;color:var(--muted);max-width:32em;text-wrap:pretty">{{ hero.description }}</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;flex-direction:{{ ctaDir }}">
-        <a href="{{ waMain }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 28px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--primary);color:var(--on-primary);font-weight:600;text-decoration:none;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-2px);box-shadow:0 14px 30px -14px var(--primary);color:var(--on-primary)">{{ hero.primaryCta }}<span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:20px;font-feature-settings:'liga'">arrow_outward</span></a>
-        <a href="{{ hero.secondaryHref }}" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 26px;border-radius:var(--btn-r);white-space:nowrap;flex:none;border:1px solid var(--line);color:var(--ink);font-weight:500;text-decoration:none;transition:border-color .2s,background .2s" style-hover="border-color:var(--ink);color:var(--ink)">{{ hero.secondaryCta }}</a>
+        <a href="{{ waMain }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 24px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--primary);color:var(--on-primary);font-weight:600;font-size:0.95rem;text-decoration:none;transition:background .2s" style-hover="background:var(--accent);color:var(--on-accent)">{{ hero.primaryCta }}<span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:18px;font-feature-settings:'liga'">arrow_outward</span></a>
+        <a href="{{ hero.secondaryHref }}" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 22px;border-radius:var(--btn-r);white-space:nowrap;flex:none;color:var(--ink);font-weight:500;font-size:0.95rem;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px" style-hover="color:var(--accent)">{{ hero.secondaryCta }}</a>
       </div>
       <sc-if value="{{ hero.hasBadges }}" hint-placeholder-val="{{ true }}">
         <ul style="list-style:none;margin:8px 0 0;padding:20px 0 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 28px">
@@ -112,20 +112,17 @@ a:hover{color:var(--accent)}
         </ul>
       </sc-if>
     </div>
-    <div style="flex:1 1 360px;max-width:500px;width:100%;position:relative;margin:0 auto">
-      <div style="aspect-ratio:4/5;border-radius:var(--arch);overflow:hidden;background:var(--surface)">
+    <figure style="flex:1 1 340px;max-width:540px;width:100%;position:relative;margin:0">
+      <div style="aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;background:var(--surface)">
         <image-slot id="{{ img.hero.id }}" src="{{ img.hero.src }}" shape="rect" placeholder="Retrato profissional (4:5)"></image-slot>
       </div>
       <sc-if value="{{ hero.showSecondary }}" hint-placeholder-val="{{ true }}">
-        <div style="position:absolute;left:-6%;bottom:-6%;width:38%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:6px solid var(--bg);background:var(--surface)">
-          <image-slot id="{{ img.hero2.id }}" src="{{ img.hero2.src }}" shape="circle" placeholder="Foto secundária"></image-slot>
+        <div style="position:absolute;left:-8%;bottom:12%;width:34%;aspect-ratio:3/4;border-radius:var(--r);overflow:hidden;border:6px solid var(--bg);background:var(--surface)">
+          <image-slot id="{{ img.hero2.id }}" src="{{ img.hero2.src }}" shape="rect" placeholder="Foto secundária"></image-slot>
         </div>
       </sc-if>
-      <div style="position:absolute;right:-4%;top:10%;background:var(--card);color:var(--ink);border-radius:calc(var(--r) * 0.8);padding:14px 18px;box-shadow:0 18px 40px -22px rgba(0,0,0,.35);display:flex;align-items:center;gap:12px;max-width:240px;pointer-events:none">
-        <span aria-hidden="true" style="width:38px;height:38px;flex:none;border-radius:50%;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:20px;font-feature-settings:'liga'">verified</span>
-        <span style="display:flex;flex-direction:column;line-height:1.25"><strong style="font-size:0.88rem;font-weight:600">{{ brand.name }}</strong><span style="font-size:0.76rem;color:var(--muted)">{{ brand.crn }}</span></span>
-      </div>
-    </div>
+      <figcaption style="margin-top:14px;font-size:0.84rem;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span>{{ brand.name }}</span><span>{{ brand.crn }}</span></figcaption>
+    </figure>
   </div>
 </section>
 </sc-if>
@@ -148,7 +145,7 @@ a:hover{color:var(--accent)}
 
 <!-- 04 SOBRE -->
 <sc-if value="{{ show.about }}" hint-placeholder-val="{{ true }}">
-<section id="sobre" data-screen-label="Sobre" style="order:{{ ord.about }};scroll-margin-top:84px;padding:clamp(80px,11vw,148px) 0">
+<section id="sobre" data-screen-label="Sobre" style="order:{{ ord.about }};scroll-margin-top:84px;padding:clamp(72px,9vw,128px) 0">
   <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:grid;grid-template-columns:{{ cols.about }};gap:clamp(40px,7vw,112px);align-items:center">
     <figure style="margin:0;display:flex;flex-direction:column;gap:14px">
       <div style="aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;background:var(--surface)">
@@ -157,7 +154,7 @@ a:hover{color:var(--accent)}
       <figcaption style="font-size:0.85rem;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span>{{ brand.name }} · {{ brand.title }}</span><span>{{ brand.crn }}</span></figcaption>
     </figure>
     <div style="display:flex;flex-direction:column;gap:28px;min-width:0">
-      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ about.eyebrow }}</div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600">{{ about.eyebrow }}</div>
       <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.08;font-size:clamp(2rem,3.6vw,3.2rem);margin:0;text-wrap:balance">{{ about.title }}</h2>
       <div style="display:flex;flex-direction:column;gap:16px;color:var(--muted);font-size:1.05rem;max-width:36em">
         <sc-for list="{{ about.story }}" as="p" hint-placeholder-count="2"><p style="margin:0;text-wrap:pretty">{{ p }}</p></sc-for>
@@ -191,11 +188,11 @@ a:hover{color:var(--accent)}
 
 <!-- 05 ESPECIALIDADES -->
 <sc-if value="{{ show.specialties }}" hint-placeholder-val="{{ true }}">
-<section id="especialidades" data-screen-label="Especialidades" style="order:{{ ord.specialties }};scroll-margin-top:84px;padding:clamp(80px,10vw,136px) 0;background:var(--surface)">
+<section id="especialidades" data-screen-label="Especialidades" style="order:{{ ord.specialties }};scroll-margin-top:84px;padding:clamp(72px,9vw,128px) 0;background:var(--surface)">
   <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-direction:column;gap:clamp(36px,5vw,64px)">
     <div style="display:grid;grid-template-columns:{{ cols.header }};gap:24px clamp(40px,6vw,96px);align-items:end">
       <div style="display:flex;flex-direction:column;gap:20px">
-        <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ spec.eyebrow }}</div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600">{{ spec.eyebrow }}</div>
         <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.6rem);margin:0">{{ spec.title }}</h2>
       </div>
       <p style="margin:0;color:var(--muted);font-size:1.05rem;max-width:30em;text-wrap:pretty">{{ spec.intro }}</p>
@@ -212,7 +209,7 @@ a:hover{color:var(--accent)}
             </button>
           </sc-for>
         </div>
-        <article role="tabpanel" style="background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:0 30px 60px -40px rgba(0,0,0,.35);position:sticky;top:110px">
+        <article role="tabpanel" style="background:var(--card);border-radius:var(--r);overflow:hidden;position:sticky;top:110px">
           <div style="aspect-ratio:16/9;background:var(--surface)">
             <image-slot id="{{ spec.active.imgId }}" src="{{ spec.active.imgSrc }}" shape="rect" placeholder="Imagem da especialidade"></image-slot>
           </div>
@@ -254,18 +251,17 @@ a:hover{color:var(--accent)}
 
 <!-- 06 COMO FUNCIONA -->
 <sc-if value="{{ show.process }}" hint-placeholder-val="{{ true }}">
-<section id="como-funciona" data-screen-label="Como funciona" style="order:{{ ord.process }};scroll-margin-top:84px;padding:clamp(80px,10vw,136px) 0">
+<section id="como-funciona" data-screen-label="Como funciona" style="order:{{ ord.process }};scroll-margin-top:84px;padding:clamp(72px,9vw,128px) 0">
   <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)">
     <div style="display:flex;flex-direction:column;gap:20px;max-width:720px">
-      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ process.eyebrow }}</div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600">{{ process.eyebrow }}</div>
       <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.6rem);margin:0;text-wrap:balance">{{ process.title }}</h2>
     </div>
     <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:40px clamp(24px,3vw,40px)">
       <sc-for list="{{ process.steps }}" as="st" hint-placeholder-count="4">
         <li style="display:flex;flex-direction:column;gap:14px;padding-top:24px;border-top:1px solid var(--ink)">
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-family:var(--hf);font-weight:var(--hw);font-size:2.6rem;line-height:1;color:var(--accent);font-variant-numeric:lining-nums">{{ st.num }}</span>
-            <span aria-hidden="true" style="width:44px;height:44px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:22px;font-feature-settings:'liga'">{{ st.icon }}</span>
+            <span style="font-family:var(--hf);font-weight:var(--hw);font-size:2.2rem;line-height:1;color:var(--accent);font-variant-numeric:lining-nums">{{ st.num }}</span>
           </div>
           <h3 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.35rem;line-height:1.2;margin:8px 0 0">{{ st.title }}</h3>
           <p style="margin:0;color:var(--muted);font-size:0.98rem;text-wrap:pretty">{{ st.description }}</p>
@@ -278,17 +274,16 @@ a:hover{color:var(--accent)}
 
 <!-- 07 DIFERENCIAIS -->
 <sc-if value="{{ show.differentials }}" hint-placeholder-val="{{ true }}">
-<section id="diferenciais" data-screen-label="Diferenciais" style="order:{{ ord.differentials }};scroll-margin-top:84px;padding:0 clamp(12px,2vw,24px)">
-  <div style="max-width:1400px;margin:0 auto;background:var(--primary);color:var(--on-primary);border-radius:calc(var(--r) * 1.6);padding:clamp(56px,8vw,112px) clamp(20px,5vw,80px)">
+<section id="diferenciais" data-screen-label="Diferenciais" style="order:{{ ord.differentials }};scroll-margin-top:84px;padding:0">
+  <div style="background:var(--primary);color:var(--on-primary);padding:clamp(56px,8vw,112px) clamp(20px,5vw,56px)">
     <div style="max-width:1160px;margin:0 auto;display:grid;grid-template-columns:{{ cols.diff }};gap:48px clamp(40px,6vw,96px)">
       <div style="display:flex;flex-direction:column;gap:20px">
-        <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ diff.eyebrow }}</div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:600">{{ diff.eyebrow }}</div>
         <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.4rem);margin:0;text-wrap:balance">{{ diff.title }}</h2>
       </div>
       <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:36px 40px">
         <sc-for list="{{ diff.items }}" as="d" hint-placeholder-count="4">
           <li style="display:flex;flex-direction:column;gap:10px">
-            <span aria-hidden="true" style="width:48px;height:48px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:22px;font-feature-settings:'liga'">{{ d.icon }}</span>
             <h3 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.3rem;line-height:1.2;margin:6px 0 0">{{ d.title }}</h3>
             <p style="margin:0;font-size:0.98rem;text-wrap:pretty">{{ d.description }}</p>
           </li>
@@ -301,17 +296,16 @@ a:hover{color:var(--accent)}
 
 <!-- 08 MODALIDADES -->
 <sc-if value="{{ show.modalities }}" hint-placeholder-val="{{ true }}">
-<section id="modalidades" data-screen-label="Modalidades" style="order:{{ ord.modalities }};scroll-margin-top:84px;padding:clamp(80px,10vw,136px) 0">
+<section id="modalidades" data-screen-label="Modalidades" style="order:{{ ord.modalities }};scroll-margin-top:84px;padding:clamp(72px,9vw,128px) 0">
   <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
     <div style="display:flex;flex-direction:column;gap:20px">
-      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ mods.eyebrow }}</div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600">{{ mods.eyebrow }}</div>
       <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.4rem);margin:0">{{ mods.title }}</h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px">
       <sc-for list="{{ mods.items }}" as="m" hint-placeholder-count="2">
-        <article style="background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:14px;transition:transform .3s,box-shadow .3s" style-hover="transform:translateY(-3px);box-shadow:0 24px 50px -36px rgba(0,0,0,.4)">
-          <span aria-hidden="true" style="width:52px;height:52px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:24px;font-feature-settings:'liga';color:var(--accent)">{{ m.icon }}</span>
-          <h3 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.6rem;line-height:1.1;margin:6px 0 0">{{ m.title }}</h3>
+        <article style="border-top:1px solid var(--ink);padding:24px 0 0;display:flex;flex-direction:column;gap:14px">
+          <h3 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.6rem;line-height:1.1;margin:0">{{ m.title }}</h3>
           <p style="margin:0;color:var(--muted)">{{ m.description }}</p>
           <ul style="list-style:none;margin:0;padding:14px 0 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:4px;font-size:0.93rem">
             <sc-for list="{{ m.details }}" as="dt" hint-placeholder-count="1"><li>{{ dt }}</li></sc-for>
@@ -326,10 +320,10 @@ a:hover{color:var(--accent)}
 
 <!-- 09 DEPOIMENTOS (some quando vazio) -->
 <sc-if value="{{ show.testimonials }}" hint-placeholder-val="{{ false }}">
-<section id="depoimentos" data-screen-label="Depoimentos" style="order:{{ ord.testimonials }};scroll-margin-top:84px;padding:clamp(80px,10vw,136px) 0;background:var(--surface)">
+<section id="depoimentos" data-screen-label="Depoimentos" style="order:{{ ord.testimonials }};scroll-margin-top:84px;padding:clamp(72px,9vw,128px) 0;background:var(--surface)">
   <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
     <div style="display:flex;flex-direction:column;gap:20px">
-      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ testi.eyebrow }}</div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600">{{ testi.eyebrow }}</div>
       <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.4rem);margin:0">{{ testi.title }}</h2>
       <sc-if value="{{ testi.isPreview }}" hint-placeholder-val="{{ false }}">
         <p style="margin:0;font-size:0.85rem;color:var(--accent);font-weight:600">Pré-visualização de layout · esta seção só aparece com depoimentos reais e autorizados.</p>
@@ -337,7 +331,7 @@ a:hover{color:var(--accent)}
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px">
       <sc-for list="{{ testi.items }}" as="tm" hint-placeholder-count="3">
-        <figure style="margin:0;background:var(--card);border-radius:var(--r);padding:32px;display:flex;flex-direction:column;gap:20px">
+        <figure style="margin:0;border-top:1px solid var(--ink);padding:28px 0 0;display:flex;flex-direction:column;gap:20px">
           <sc-if value="{{ tm.hasRating }}" hint-placeholder-val="{{ false }}">
             <div role="img" aria-label="{{ tm.ratingLabel }}" style="display:flex;gap:2px;color:var(--accent)"><sc-for list="{{ tm.stars }}" as="sx"><span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:18px;font-variation-settings:'FILL' 1;font-feature-settings:'liga'">star</span></sc-for></div>
           </sc-if>
@@ -355,10 +349,10 @@ a:hover{color:var(--accent)}
 
 <!-- 10 FAQ -->
 <sc-if value="{{ show.faq }}" hint-placeholder-val="{{ true }}">
-<section id="duvidas" data-screen-label="FAQ" style="order:{{ ord.faq }};scroll-margin-top:84px;padding:clamp(80px,10vw,136px) 0">
+<section id="duvidas" data-screen-label="FAQ" style="order:{{ ord.faq }};scroll-margin-top:84px;padding:clamp(72px,9vw,128px) 0">
   <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:grid;grid-template-columns:{{ cols.faq }};gap:40px clamp(40px,6vw,96px);align-items:start">
     <div style="display:flex;flex-direction:column;gap:20px">
-      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ faq.eyebrow }}</div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600">{{ faq.eyebrow }}</div>
       <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.4rem);margin:0">{{ faq.title }}</h2>
       <p style="margin:8px 0 0;color:var(--muted)">{{ faq.aside }} <a href="{{ waMain }}" target="_blank" rel="noopener" style="color:var(--ink);font-weight:600">Envie uma mensagem.</a></p>
     </div>
@@ -368,7 +362,7 @@ a:hover{color:var(--accent)}
           <h3 style="margin:0">
             <button type="button" id="{{ f.btnId }}" aria-expanded="{{ f.open }}" aria-controls="{{ f.panelId }}" onClick="{{ f.toggle }}" style="all:unset;cursor:pointer;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 0;font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:clamp(1.15rem,1.6vw,1.35rem);line-height:1.3">
               <span>{{ f.q }}</span>
-              <span aria-hidden="true" style="flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:20px;font-feature-settings:'liga';transition:transform .35s;transform:rotate({{ f.rot }})">add</span>
+              <span aria-hidden="true" style="flex:none;width:20px;height:20px;position:relative;transition:transform .35s;transform:rotate({{ f.rot }})"><span style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor"></span><span style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:currentColor"></span></span>
             </button>
           </h3>
           <div id="{{ f.panelId }}" role="region" aria-labelledby="{{ f.btnId }}" style="display:grid;grid-template-rows:{{ f.rows }};transition:grid-template-rows .35s ease">
@@ -383,8 +377,8 @@ a:hover{color:var(--accent)}
 
 <!-- 11 CTA FINAL -->
 <sc-if value="{{ show.cta }}" hint-placeholder-val="{{ true }}">
-<section id="agendar" data-screen-label="CTA final" style="order:{{ ord.cta }};scroll-margin-top:84px;padding:0 clamp(12px,2vw,24px)">
-  <div style="max-width:1400px;margin:0 auto;background:var(--primary);color:var(--on-primary);border-radius:calc(var(--r) * 1.6);overflow:hidden;display:grid;grid-template-columns:{{ cols.cta }};align-items:stretch">
+<section id="agendar" data-screen-label="CTA final" style="order:{{ ord.cta }};scroll-margin-top:84px;padding:0">
+  <div style="background:var(--primary);color:var(--on-primary);overflow:hidden;display:grid;grid-template-columns:{{ cols.cta }};align-items:stretch">
     <div style="padding:clamp(48px,7vw,104px) clamp(24px,5vw,80px);display:flex;flex-direction:column;justify-content:center;gap:24px">
       <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.02;font-size:clamp(2.4rem,4.6vw,4.2rem);margin:0;text-wrap:balance">{{ cta.title }}</h2>
       <p style="margin:0;font-size:1.1rem;max-width:30em;text-wrap:pretty">{{ cta.description }}</p>
@@ -399,18 +393,17 @@ a:hover{color:var(--accent)}
 
 <!-- 12 CONTATO -->
 <sc-if value="{{ show.contact }}" hint-placeholder-val="{{ true }}">
-<section id="contato" data-screen-label="Contato" style="order:{{ ord.contact }};scroll-margin-top:84px;padding:clamp(80px,10vw,136px) 0">
+<section id="contato" data-screen-label="Contato" style="order:{{ ord.contact }};scroll-margin-top:84px;padding:clamp(72px,9vw,128px) 0">
   <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:grid;grid-template-columns:{{ cols.contact }};gap:48px clamp(40px,6vw,96px)">
     <div style="display:flex;flex-direction:column;gap:28px">
       <div style="display:flex;flex-direction:column;gap:20px">
-        <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>Contato</div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600">Contato</div>
         <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.4rem);margin:0">{{ contact.title }}</h2>
       </div>
       <ul style="list-style:none;margin:0;padding:0;border-top:1px solid var(--line)">
         <sc-for list="{{ contact.rows }}" as="r" hint-placeholder-count="4">
           <li style="border-bottom:1px solid var(--line)">
             <a href="{{ r.href }}" target="{{ r.target }}" rel="noopener" style="display:flex;align-items:center;gap:16px;padding:16px 0;text-decoration:none;color:var(--ink);min-height:44px" style-hover="color:var(--accent)">
-              <span aria-hidden="true" style="width:42px;height:42px;flex:none;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:20px;font-feature-settings:'liga'">{{ r.icon }}</span>
               <span style="display:flex;flex-direction:column;line-height:1.3;min-width:0"><span style="font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600">{{ r.label }}</span><span style="overflow-wrap:anywhere">{{ r.value }}</span></span>
             </a>
           </li>
@@ -465,7 +458,7 @@ a:hover{color:var(--accent)}
 </footer>
 
 <sc-if value="{{ fab.enabled }}" hint-placeholder-val="{{ false }}">
-  <a href="{{ waMain }}" target="_blank" rel="noopener" aria-label="{{ fab.aria }}" style="position:fixed;right:20px;bottom:20px;z-index:60;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:56px;height:56px;padding:0 {{ fab.pad }};border-radius:999px;background:var(--primary);color:var(--on-primary);text-decoration:none;font-weight:600;font-size:0.92rem;white-space:nowrap;box-shadow:0 16px 36px -14px rgba(0,0,0,.45);transition:opacity .35s,transform .35s;opacity:{{ fab.opacity }};transform:translateY({{ fab.y }});pointer-events:{{ fab.pe }}" style-hover="color:var(--on-primary)">
+  <a href="{{ waMain }}" target="_blank" rel="noopener" aria-label="{{ fab.aria }}" style="position:fixed;right:20px;bottom:20px;z-index:60;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:56px;height:56px;padding:0 {{ fab.pad }};border-radius:999px;background:var(--primary);color:var(--on-primary);text-decoration:none;font-weight:600;font-size:0.92rem;white-space:nowrap;transition:opacity .35s,transform .35s;opacity:{{ fab.opacity }};transform:translateY({{ fab.y }});pointer-events:{{ fab.pe }}" style-hover="color:var(--on-primary)">
     <span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:24px;font-feature-settings:'liga'">chat</span>
     <sc-if value="{{ fab.showLabel }}" hint-placeholder-val="{{ true }}"><span>{{ fab.label }}</span></sc-if>
   </a>
