@@ -6,7 +6,7 @@ window.NWL_CLIENTS.materno = {
   branding: {
     radius: 28,
     colors: { bg: '#FBF5F1', surface: '#F3E5DE', card: '#FFFDFB', ink: '#3A2A30', muted: '#6E5C63', line: 'rgba(58,42,48,0.13)',
-      primary: '#7A4B5B', onPrimary: '#FFF8F5', accent: '#B8694F', onAccent: '#FFFFFF' },
+      primary: '#7A4B5B', onPrimary: '#FFF8F5', accent: '#9A5238', onAccent: '#FFFFFF' },
     fonts: { heading: 'Cormorant Garamond', body: 'Nunito Sans', headingWeight: 500, headingLetterSpacing: '-0.01em', emphasisStyle: 'italic', emphasisColor: 'accent',
       googleFontsHref: 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito+Sans:wght@400;600;700&display=swap' }
   },
