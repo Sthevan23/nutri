@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<script src="./nwl/core.js"></script>
+<script src="./config/defaults.js"></script>
+<script src="./config/clients/clinico.js"></script>
+<script src="./config/clients/esportivo.js"></script>
+<script src="./config/clients/materno.js"></script>
+<script src="./config/clients/idosos.js"></script>
+<script src="./config/clients/minimo.js"></script>
+<style>
+body{margin:0;background:var(--bg,#F4F1EB);color:var(--ink,#1D2320);font-family:var(--bf,system-ui,sans-serif);-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:var(--primary,#2C4A3E);text-underline-offset:3px}
+a:hover{color:var(--accent,#A35A3E)}
+</style>
+</helmet>
+<article style="max-width:760px;margin:0 auto;padding:clamp(32px,6vw,80px) clamp(20px,5vw,40px);line-height:1.7;font-size:1rem">
+  <a href="{{ back }}" style="font-size:0.9rem">← Voltar ao site</a>
+  <h1 style="font-family:var(--hf,Georgia,serif);font-weight:var(--hw,400);letter-spacing:var(--hls,-0.015em);font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.1;margin:28px 0 8px">Política de privacidade</h1>
+  <p style="margin:0 0 32px;color:var(--muted,#58605B)">{{ name }} · {{ crn }} · atualizada em {{ updated }}</p>
+  <sc-for list="{{ blocks }}" as="bl" hint-placeholder-count="7">
+    <section style="padding:20px 0;border-top:1px solid var(--line,rgba(0,0,0,.12))">
+      <h2 style="font-family:var(--hf,Georgia,serif);font-weight:var(--hw,400);font-size:1.35rem;margin:0 0 8px">{{ bl.h }}</h2>
+      <p style="margin:0;color:var(--muted,#58605B)">{{ bl.p }}</p>
+    </section>
+  </sc-for>
+  <p style="margin:32px 0 0;font-size:0.85rem;color:var(--muted,#58605B)">Modelo base do Nutri White Label. Revise com assessoria jurídica antes de publicar.</p>
+</article>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { t: 0 };
+  componentDidMount() { this.p = setInterval(() => { if (window.NWLCore && window.NWL_DEFAULTS && window.NWLCore.list().length) { clearInterval(this.p); this.setState({ t: 1 }); } }, 50); }
+  componentDidUpdate() { if (this.cfg && !this.applied) { this.applied = true; window.NWLCore.applyTheme(this.cfg); document.title = 'Política de privacidade · ' + this.cfg.professional.name; } }
+  componentWillUnmount() { clearInterval(this.p); }
+  renderVals() {
+    const C = window.NWLCore;
+    if (!C || !window.NWL_DEFAULTS || !C.list().length) return { blocks: [] };
+    const id = C.pickClient(), c = this.cfg = C.resolve(id), p = c.professional, k = c.contact;
+    const contact = k.email || (k.whatsapp ? 'WhatsApp +' + String(k.whatsapp).replace(/\D/g, '') : 'os canais indicados no site');
+    return {
+      back: 'Nutri White Label.dc.html?cliente=' + id, name: p.name, crn: p.crn || 'CRN não informado', updated: new Date().toLocaleDateString('pt-BR'),
+      blocks: [
+        { h: 'Quem é o controlador', p: p.name + ', ' + (p.title || 'nutricionista') + (p.crn ? ' (' + p.crn + ')' : '') + ', é responsável pelos dados pessoais tratados por meio deste site, nos termos da Lei nº 13.709/2018 (LGPD).' },
+        { h: 'Quais dados coletamos', p: 'Este site não possui formulários nem cadastro. Os dados que você compartilha ao clicar em WhatsApp, e-mail ou telefone (nome, número, mensagem) são tratados diretamente nesses canais.' },
+        { h: 'Finalidade', p: 'Responder ao seu contato, agendar consultas e prestar o atendimento nutricional solicitado. Dados de saúde informados em consulta são sensíveis e protegidos pelo sigilo profissional previsto no Código de Ética do Nutricionista.' },
+        { h: 'Compartilhamento', p: 'Não vendemos nem cedemos dados. Serviços de terceiros usados pelo site (Google Fonts, Google Maps e WhatsApp) possuem políticas próprias.' },
+        { h: 'Cookies e métricas', p: 'Esta versão não utiliza cookies de rastreamento nem ferramentas de análise. Caso sejam adicionados, esta política será atualizada e o consentimento será solicitado.' },
+        { h: 'Depoimentos e imagens', p: 'Depoimentos e fotos de pacientes só são publicados com autorização expressa e podem ser removidos a qualquer momento mediante solicitação.' },
+        { h: 'Seus direitos', p: 'Você pode solicitar acesso, correção, anonimização, portabilidade ou exclusão dos seus dados, além de revogar consentimentos, pelo contato: ' + contact + '.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

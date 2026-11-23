@@ -1,0 +1,5 @@
+# Nutri White Label — domínio: nutri.jirehweb.com.br
+User-agent: *
+Allow: /
+Disallow: /Documentacao.dc.html
+Sitemap: https://nutri.jirehweb.com.br/sitemap.xml

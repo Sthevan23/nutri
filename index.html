@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300,0,0&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<script src="./nwl/core.js"></script>
+<script src="./config/defaults.js"></script>
+<script src="./config/clients/clinico.js"></script>
+<script src="./config/clients/esportivo.js"></script>
+<script src="./config/clients/materno.js"></script>
+<script src="./config/clients/idosos.js"></script>
+<script src="./config/clients/minimo.js"></script>
+<script src="./config/clients/premium.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+:root{--bg:#F4F1EB;--surface:#E9E3D8;--card:#FBF9F5;--ink:#1D2320;--muted:#58605B;--line:rgba(29,35,32,.14);--primary:#2C4A3E;--on-primary:#F4F1EB;--accent:#A35A3E;--on-accent:#fff;--hf:'Newsreader',Georgia,serif;--bf:'Hanken Grotesk',system-ui,sans-serif;--hw:400;--ht:none;--hls:-0.015em;--em-style:italic;--em-color:var(--accent);--r:18px;--btn-r:999px;--arch:999px 999px 18px 18px}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--bf);-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--bf);font-size:1rem;line-height:1.6">
+
+<a href="#conteudo" style="position:absolute;left:-9999px;top:8px;background:var(--ink);color:var(--bg);padding:10px 16px;z-index:100" style-focus="left:8px">Pular para o conteúdo</a>
+
+<sc-if value="{{ showBanner }}" hint-placeholder-val="{{ true }}">
+  <div style="background:var(--ink);color:var(--bg);font-size:0.8rem">
+    <div style="max-width:1240px;margin:0 auto;padding:8px clamp(20px,5vw,56px);display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px">
+      <span style="display:flex;align-items:center;gap:8px;font-weight:600;letter-spacing:0.02em"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent)"></span>Demonstração Nutri White Label · dados fictícios</span>
+      <div role="group" aria-label="Trocar configuração de cliente" style="display:flex;flex-wrap:wrap;gap:6px;margin-left:auto">
+        <sc-for list="{{ clients }}" as="cl" hint-placeholder-count="5">
+          <button type="button" onClick="{{ cl.select }}" aria-pressed="{{ cl.pressed }}" style="font:inherit;font-size:0.76rem;cursor:pointer;padding:4px 11px;border-radius:999px;border:1px solid {{ cl.border }};background:{{ cl.bg }};color:{{ cl.fg }};transition:all .2s">{{ cl.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<header style="position:sticky;top:0;z-index:50;background:color-mix(in oklab, var(--bg) 88%, transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);height:76px;display:flex;align-items:center;gap:24px">
+    <a href="#inicio" aria-label="{{ brand.name }} — início" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);min-width:0">
+      <sc-if value="{{ brand.hasLogo }}" hint-placeholder-val="{{ false }}">
+        <span role="img" aria-label="{{ brand.name }}" style="display:block;height:40px;width:160px;background:var(--logo) left center / contain no-repeat"></span>
+      </sc-if>
+      <sc-if value="{{ brand.noLogo }}" hint-placeholder-val="{{ true }}">
+        <span aria-hidden="true" style="width:40px;height:40px;flex:none;border-radius:50%;border:1px solid var(--ink);display:grid;place-items:center;font-family:var(--hf);font-style:var(--em-style);font-size:1rem">{{ brand.initials }}</span>
+        <span style="display:flex;flex-direction:column;line-height:1.15;min-width:0">
+          <span style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ brand.name }}</span>
+          <span style="font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">{{ brand.title }}</span>
+        </span>
+      </sc-if>
+    </a>
+    <sc-if value="{{ isDesktopNav }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Principal" style="margin-left:auto;display:flex;align-items:center;gap:28px">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+          <a href="{{ n.href }}" style="font-size:0.92rem;text-decoration:none;color:var(--ink);opacity:0.86;transition:opacity .2s,color .2s" style-hover="opacity:1;color:var(--accent)">{{ n.label }}</a>
+        </sc-for>
+      </nav>
+      <a href="{{ waMain }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--primary);color:var(--on-primary);font-weight:600;font-size:0.88rem;text-decoration:none;transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-1px);box-shadow:0 8px 20px -10px var(--primary);color:var(--on-primary)">{{ hero.primaryCta }}</a>
+    </sc-if>
+    <sc-if value="{{ isMobileNav }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+        <a href="{{ waMain }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;height:44px;padding:0 16px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--primary);color:var(--on-primary);font-weight:600;font-size:0.85rem;text-decoration:none">Agendar</a>
+        <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-controls="menu-mobile" aria-label="Abrir menu" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer"><span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:22px;line-height:1;font-feature-settings:'liga'">{{ menuIcon }}</span></button>
+      </div>
+    </sc-if>
+  </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav id="menu-mobile" aria-label="Menu" style="position:fixed;left:0;right:0;top:76px;bottom:0;background:var(--bg);padding:32px clamp(20px,5vw,56px);display:flex;flex-direction:column;gap:4px;overflow:auto">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+        <a href="{{ n.href }}" onClick="{{ closeMenu }}" style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:2rem;text-decoration:none;color:var(--ink);padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">{{ n.label }}<span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:22px;font-feature-settings:'liga';color:var(--muted)">arrow_forward</span></a>
+      </sc-for>
+      <a href="{{ waMain }}" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="margin-top:28px;display:flex;justify-content:center;align-items:center;gap:10px;min-height:52px;border-radius:var(--btn-r);background:var(--primary);color:var(--on-primary);font-weight:600;text-decoration:none">{{ hero.primaryCta }} pelo WhatsApp</a>
+      <p style="margin:16px 0 0;font-size:0.85rem;color:var(--muted);text-align:center">{{ brand.crn }}</p>
+    </nav>
+  </sc-if>
+</header>
+
+<main id="conteudo" style="display:flex;flex-direction:column">
+
+<!-- 02 HERO -->
+<sc-if value="{{ show.hero }}" hint-placeholder-val="{{ true }}">
+<section id="inicio" data-screen-label="Hero" style="order:{{ ord.hero }};scroll-margin-top:84px;padding:clamp(36px,6vw,80px) 0 clamp(96px,12vw,168px)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-wrap:wrap;gap:clamp(48px,6vw,96px);align-items:center">
+    <div style="flex:1 1 500px;min-width:0;display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ hero.eyebrow }}</div>
+      <h1 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.02;font-size:clamp(2.6rem,5.4vw,5rem);margin:0;text-wrap:balance">{{ hero.title }}<em style="font-style:var(--em-style);color:var(--em-color)">{{ hero.titleEmphasis }}</em>{{ hero.titleAfter }}</h1>
+      <p style="margin:0;font-size:1.14rem;line-height:1.65;color:var(--muted);max-width:34em;text-wrap:pretty">{{ hero.description }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;flex-direction:{{ ctaDir }}">
+        <a href="{{ waMain }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 28px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--primary);color:var(--on-primary);font-weight:600;text-decoration:none;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-2px);box-shadow:0 14px 30px -14px var(--primary);color:var(--on-primary)">{{ hero.primaryCta }}<span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:20px;font-feature-settings:'liga'">arrow_outward</span></a>
+        <a href="{{ hero.secondaryHref }}" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 26px;border-radius:var(--btn-r);white-space:nowrap;flex:none;border:1px solid var(--line);color:var(--ink);font-weight:500;text-decoration:none;transition:border-color .2s,background .2s" style-hover="border-color:var(--ink);color:var(--ink)">{{ hero.secondaryCta }}</a>
+      </div>
+      <sc-if value="{{ hero.hasBadges }}" hint-placeholder-val="{{ true }}">
+        <ul style="list-style:none;margin:8px 0 0;padding:20px 0 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 28px">
+          <sc-for list="{{ hero.badges }}" as="b" hint-placeholder-count="3">
+            <li style="display:flex;align-items:center;gap:8px;font-size:0.9rem;color:var(--ink)"><span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:20px;line-height:1;font-feature-settings:'liga';color:var(--accent)">{{ b.icon }}</span>{{ b.label }}</li>
+          </sc-for>
+        </ul>
+      </sc-if>
+    </div>
+    <div style="flex:1 1 360px;max-width:500px;width:100%;position:relative;margin:0 auto">
+      <div style="aspect-ratio:4/5;border-radius:var(--arch);overflow:hidden;background:var(--surface)">
+        <image-slot id="{{ img.hero.id }}" src="{{ img.hero.src }}" shape="rect" placeholder="Retrato profissional (4:5)"></image-slot>
+      </div>
+      <sc-if value="{{ hero.showSecondary }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;left:-6%;bottom:-6%;width:38%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:6px solid var(--bg);background:var(--surface)">
+          <image-slot id="{{ img.hero2.id }}" src="{{ img.hero2.src }}" shape="circle" placeholder="Foto secundária"></image-slot>
+        </div>
+      </sc-if>
+      <div style="position:absolute;right:-4%;top:10%;background:var(--card);color:var(--ink);border-radius:calc(var(--r) * 0.8);padding:14px 18px;box-shadow:0 18px 40px -22px rgba(0,0,0,.35);display:flex;align-items:center;gap:12px;max-width:240px;pointer-events:none">
+        <span aria-hidden="true" style="width:38px;height:38px;flex:none;border-radius:50%;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:20px;font-feature-settings:'liga'">verified</span>
+        <span style="display:flex;flex-direction:column;line-height:1.25"><strong style="font-size:0.88rem;font-weight:600">{{ brand.name }}</strong><span style="font-size:0.76rem;color:var(--muted)">{{ brand.crn }}</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- 03 INDICADORES -->
+<sc-if value="{{ show.trust }}" hint-placeholder-val="{{ true }}">
+<section id="credenciais" aria-label="Credenciais" style="order:{{ ord.trust }};scroll-margin-top:84px">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px)">
+    <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+      <sc-for list="{{ trust }}" as="t" hint-placeholder-count="4">
+        <div style="background:var(--bg);padding:26px 24px 26px 0;display:flex;flex-direction:column;gap:6px">
+          <dt style="font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600">{{ t.label }}</dt>
+          <dd style="margin:0;font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.3rem;line-height:1.25">{{ t.value }}</dd>
+        </div>
+      </sc-for>
+    </dl>
+  </div>
+</section>
+</sc-if>
+
+<!-- 04 SOBRE -->
+<sc-if value="{{ show.about }}" hint-placeholder-val="{{ true }}">
+<section id="sobre" data-screen-label="Sobre" style="order:{{ ord.about }};scroll-margin-top:84px;padding:clamp(112px,14vw,200px) 0">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:grid;grid-template-columns:{{ cols.about }};gap:clamp(40px,7vw,112px);align-items:center">
+    <figure style="margin:0;display:flex;flex-direction:column;gap:14px">
+      <div style="aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;background:var(--surface)">
+        <image-slot id="{{ img.about.id }}" src="{{ img.about.src }}" shape="rect" placeholder="Foto profissional — consultório"></image-slot>
+      </div>
+      <figcaption style="font-size:0.85rem;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span>{{ brand.name }} · {{ brand.title }}</span><span>{{ brand.crn }}</span></figcaption>
+    </figure>
+    <div style="display:flex;flex-direction:column;gap:28px;min-width:0">
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ about.eyebrow }}</div>
+      <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.08;font-size:clamp(2rem,3.6vw,3.2rem);margin:0;text-wrap:balance">{{ about.title }}</h2>
+      <div style="display:flex;flex-direction:column;gap:16px;color:var(--muted);font-size:1.05rem;max-width:36em">
+        <sc-for list="{{ about.story }}" as="p" hint-placeholder-count="2"><p style="margin:0;text-wrap:pretty">{{ p }}</p></sc-for>
+      </div>
+      <sc-if value="{{ about.hasApproach }}" hint-placeholder-val="{{ true }}">
+        <blockquote style="margin:4px 0;padding:0;display:flex;gap:16px">
+          <span aria-hidden="true" style="font-family:var(--hf);font-size:4rem;line-height:0.8;color:var(--accent)">“</span>
+          <p style="margin:0;font-family:var(--hf);font-style:var(--em-style);font-size:1.4rem;line-height:1.4;text-wrap:pretty">{{ about.approach }}</p>
+        </blockquote>
+      </sc-if>
+      <sc-if value="{{ about.hasEducation }}" hint-placeholder-val="{{ true }}">
+        <dl style="margin:0;border-top:1px solid var(--line)">
+          <sc-for list="{{ about.education }}" as="ed" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:minmax(110px,0.4fr) 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)">
+              <dt style="font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-top:2px">{{ ed.label }}</dt>
+              <dd style="margin:0">{{ ed.value }}</dd>
+            </div>
+          </sc-for>
+        </dl>
+      </sc-if>
+      <div style="display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center">
+        <a href="{{ waMain }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 24px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--primary);color:var(--on-primary);font-weight:600;text-decoration:none;transition:transform .25s" style-hover="transform:translateY(-2px);color:var(--on-primary)">{{ about.cta }}</a>
+        <sc-if value="{{ contact.hasInstagram }}" hint-placeholder-val="{{ true }}">
+          <a href="{{ contact.instagramUrl }}" target="_blank" rel="noopener" style="font-size:0.95rem;font-weight:500">Acompanhar {{ contact.instagram }}</a>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- 05 ESPECIALIDADES -->
+<sc-if value="{{ show.specialties }}" hint-placeholder-val="{{ true }}">
+<section id="especialidades" data-screen-label="Especialidades" style="order:{{ ord.specialties }};scroll-margin-top:84px;padding:clamp(112px,14vw,200px) 0;background:var(--surface)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-direction:column;gap:clamp(36px,5vw,64px)">
+    <div style="display:grid;grid-template-columns:{{ cols.header }};gap:24px clamp(40px,6vw,96px);align-items:end">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ spec.eyebrow }}</div>
+        <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.6rem);margin:0">{{ spec.title }}</h2>
+      </div>
+      <p style="margin:0;color:var(--muted);font-size:1.05rem;max-width:30em;text-wrap:pretty">{{ spec.intro }}</p>
+    </div>
+
+    <sc-if value="{{ isWide }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(40px,5vw,80px);align-items:start">
+        <div role="tablist" aria-label="Especialidades" style="display:flex;flex-direction:column;border-bottom:1px solid var(--line)">
+          <sc-for list="{{ spec.items }}" as="s" hint-placeholder-count="4">
+            <button type="button" role="tab" aria-selected="{{ s.active }}" onClick="{{ s.select }}" onMouseEnter="{{ s.select }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:20px;padding:22px 0;border-top:1px solid var(--line);color:{{ s.color }};transition:color .25s,padding .3s;padding-left:{{ s.indent }}">
+              <span style="font-size:0.8rem;font-variant-numeric:tabular-nums;color:var(--muted);width:24px">{{ s.num }}</span>
+              <span style="flex:1;font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:clamp(1.4rem,2vw,1.85rem);line-height:1.15">{{ s.name }}</span>
+              <span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:22px;font-feature-settings:'liga';opacity:{{ s.arrow }};transition:opacity .25s;color:var(--accent)">arrow_forward</span>
+            </button>
+          </sc-for>
+        </div>
+        <article role="tabpanel" style="background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:0 30px 60px -40px rgba(0,0,0,.35);position:sticky;top:110px">
+          <div style="aspect-ratio:16/9;background:var(--surface)">
+            <image-slot id="{{ spec.active.imgId }}" src="{{ spec.active.imgSrc }}" shape="rect" placeholder="Imagem da especialidade"></image-slot>
+          </div>
+          <div style="padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;gap:18px">
+            <h3 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:2rem;line-height:1.1;margin:0">{{ spec.active.name }}</h3>
+            <p style="margin:0;color:var(--muted);font-size:1.05rem;text-wrap:pretty">{{ spec.active.description }}</p>
+            <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ spec.active.goals }}" as="g" hint-placeholder-count="3">
+                <li style="display:flex;gap:12px;align-items:flex-start"><span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:20px;line-height:1.3;font-feature-settings:'liga';color:var(--accent)">check</span>{{ g }}</li>
+              </sc-for>
+            </ul>
+            <a href="{{ spec.active.wa }}" target="_blank" rel="noopener" style="align-self:flex-start;margin-top:8px;display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 22px;border-radius:var(--btn-r);white-space:nowrap;flex:none;border:1px solid var(--ink);color:var(--ink);font-weight:600;text-decoration:none;transition:background .2s,color .2s" style-hover="background:var(--ink);color:var(--bg)">{{ spec.cta }} {{ spec.active.name }}<span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:20px;font-feature-settings:'liga'">arrow_outward</span></a>
+          </div>
+        </article>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isNarrow }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(-1 * clamp(20px,5vw,56px));padding:0 clamp(20px,5vw,56px) 8px;scrollbar-width:none">
+        <sc-for list="{{ spec.items }}" as="s" hint-placeholder-count="3">
+          <article style="flex:0 0 84%;max-width:380px;scroll-snap-align:start;background:var(--card);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column">
+            <div style="aspect-ratio:4/3;background:var(--surface)"><image-slot id="{{ s.imgId }}" src="{{ s.imgSrc }}" shape="rect" placeholder="Imagem da especialidade"></image-slot></div>
+            <div style="padding:22px;display:flex;flex-direction:column;gap:12px;flex:1">
+              <span style="font-size:0.78rem;color:var(--muted)">{{ s.num }}</span>
+              <h3 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.6rem;line-height:1.1;margin:0">{{ s.name }}</h3>
+              <p style="margin:0;color:var(--muted);font-size:0.97rem">{{ s.description }}</p>
+              <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:0.93rem">
+                <sc-for list="{{ s.goals }}" as="g" hint-placeholder-count="3"><li style="display:flex;gap:10px"><span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:18px;line-height:1.4;font-feature-settings:'liga';color:var(--accent)">check</span>{{ g }}</li></sc-for>
+              </ul>
+              <a href="{{ s.wa }}" target="_blank" rel="noopener" style="margin-top:auto;display:flex;justify-content:center;align-items:center;gap:8px;min-height:48px;padding:8px 16px;text-align:center;border-radius:var(--btn-r);border:1px solid var(--ink);color:var(--ink);font-weight:600;font-size:0.92rem;text-decoration:none">{{ spec.cta }} {{ s.name }}</a>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </sc-if>
+  </div>
+</section>
+</sc-if>
+
+<!-- 06 COMO FUNCIONA -->
+<sc-if value="{{ show.process }}" hint-placeholder-val="{{ true }}">
+<section id="como-funciona" data-screen-label="Como funciona" style="order:{{ ord.process }};scroll-margin-top:84px;padding:clamp(112px,14vw,200px) 0">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)">
+    <div style="display:flex;flex-direction:column;gap:20px;max-width:720px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ process.eyebrow }}</div>
+      <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.6rem);margin:0;text-wrap:balance">{{ process.title }}</h2>
+    </div>
+    <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:40px clamp(24px,3vw,40px)">
+      <sc-for list="{{ process.steps }}" as="st" hint-placeholder-count="4">
+        <li style="display:flex;flex-direction:column;gap:14px;padding-top:24px;border-top:1px solid var(--ink)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-family:var(--hf);font-weight:var(--hw);font-size:2.6rem;line-height:1;color:var(--accent);font-variant-numeric:lining-nums">{{ st.num }}</span>
+            <span aria-hidden="true" style="width:44px;height:44px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:22px;font-feature-settings:'liga'">{{ st.icon }}</span>
+          </div>
+          <h3 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.35rem;line-height:1.2;margin:8px 0 0">{{ st.title }}</h3>
+          <p style="margin:0;color:var(--muted);font-size:0.98rem;text-wrap:pretty">{{ st.description }}</p>
+        </li>
+      </sc-for>
+    </ol>
+  </div>
+</section>
+</sc-if>
+
+<!-- 07 DIFERENCIAIS -->
+<sc-if value="{{ show.differentials }}" hint-placeholder-val="{{ true }}">
+<section id="diferenciais" data-screen-label="Diferenciais" style="order:{{ ord.differentials }};scroll-margin-top:84px;padding:0 clamp(12px,2vw,24px)">
+  <div style="max-width:1400px;margin:0 auto;background:var(--primary);color:var(--on-primary);border-radius:calc(var(--r) * 1.6);padding:clamp(56px,8vw,112px) clamp(20px,5vw,80px)">
+    <div style="max-width:1160px;margin:0 auto;display:grid;grid-template-columns:{{ cols.diff }};gap:48px clamp(40px,6vw,96px)">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ diff.eyebrow }}</div>
+        <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.4rem);margin:0;text-wrap:balance">{{ diff.title }}</h2>
+      </div>
+      <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:36px 40px">
+        <sc-for list="{{ diff.items }}" as="d" hint-placeholder-count="4">
+          <li style="display:flex;flex-direction:column;gap:10px">
+            <span aria-hidden="true" style="width:48px;height:48px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:22px;font-feature-settings:'liga'">{{ d.icon }}</span>
+            <h3 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.3rem;line-height:1.2;margin:6px 0 0">{{ d.title }}</h3>
+            <p style="margin:0;font-size:0.98rem;text-wrap:pretty">{{ d.description }}</p>
+          </li>
+        </sc-for>
+      </ul>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- 08 MODALIDADES -->
+<sc-if value="{{ show.modalities }}" hint-placeholder-val="{{ true }}">
+<section id="modalidades" data-screen-label="Modalidades" style="order:{{ ord.modalities }};scroll-margin-top:84px;padding:clamp(112px,14vw,200px) 0">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ mods.eyebrow }}</div>
+      <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.4rem);margin:0">{{ mods.title }}</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px">
+      <sc-for list="{{ mods.items }}" as="m" hint-placeholder-count="2">
+        <article style="background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:14px;transition:transform .3s,box-shadow .3s" style-hover="transform:translateY(-3px);box-shadow:0 24px 50px -36px rgba(0,0,0,.4)">
+          <span aria-hidden="true" style="width:52px;height:52px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:24px;font-feature-settings:'liga';color:var(--accent)">{{ m.icon }}</span>
+          <h3 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.6rem;line-height:1.1;margin:6px 0 0">{{ m.title }}</h3>
+          <p style="margin:0;color:var(--muted)">{{ m.description }}</p>
+          <ul style="list-style:none;margin:0;padding:14px 0 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:4px;font-size:0.93rem">
+            <sc-for list="{{ m.details }}" as="dt" hint-placeholder-count="1"><li>{{ dt }}</li></sc-for>
+          </ul>
+          <a href="{{ m.href }}" target="_blank" rel="noopener" style="margin-top:auto;padding-top:8px;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:0.95rem;color:var(--ink);text-decoration:none" style-hover="color:var(--accent)">{{ m.linkLabel }}<span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:18px;font-feature-settings:'liga'">arrow_outward</span></a>
+        </article>
+      </sc-for>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- 09 DEPOIMENTOS (some quando vazio) -->
+<sc-if value="{{ show.testimonials }}" hint-placeholder-val="{{ false }}">
+<section id="depoimentos" data-screen-label="Depoimentos" style="order:{{ ord.testimonials }};scroll-margin-top:84px;padding:clamp(112px,14vw,200px) 0;background:var(--surface)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ testi.eyebrow }}</div>
+      <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.4rem);margin:0">{{ testi.title }}</h2>
+      <sc-if value="{{ testi.isPreview }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:0;font-size:0.85rem;color:var(--accent);font-weight:600">Pré-visualização de layout · esta seção só aparece com depoimentos reais e autorizados.</p>
+      </sc-if>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px">
+      <sc-for list="{{ testi.items }}" as="tm" hint-placeholder-count="3">
+        <figure style="margin:0;background:var(--card);border-radius:var(--r);padding:32px;display:flex;flex-direction:column;gap:20px">
+          <sc-if value="{{ tm.hasRating }}" hint-placeholder-val="{{ false }}">
+            <div role="img" aria-label="{{ tm.ratingLabel }}" style="display:flex;gap:2px;color:var(--accent)"><sc-for list="{{ tm.stars }}" as="sx"><span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:18px;font-variation-settings:'FILL' 1;font-feature-settings:'liga'">star</span></sc-for></div>
+          </sc-if>
+          <blockquote style="margin:0;font-family:var(--hf);font-style:var(--em-style);font-size:1.25rem;line-height:1.45;text-wrap:pretty;color:{{ tm.color }}">{{ tm.text }}</blockquote>
+          <figcaption style="margin-top:auto;display:flex;align-items:center;gap:12px">
+            <sc-if value="{{ tm.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ tm.photo }}" alt="" loading="lazy" style="width:44px;height:44px;border-radius:50%;object-fit:cover"></sc-if>
+            <span style="display:flex;flex-direction:column;line-height:1.3"><strong style="font-weight:600;font-size:0.95rem">{{ tm.name }}</strong><span style="font-size:0.82rem;color:var(--muted)">{{ tm.detail }}</span></span>
+          </figcaption>
+        </figure>
+      </sc-for>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- 10 FAQ -->
+<sc-if value="{{ show.faq }}" hint-placeholder-val="{{ true }}">
+<section id="duvidas" data-screen-label="FAQ" style="order:{{ ord.faq }};scroll-margin-top:84px;padding:clamp(112px,14vw,200px) 0">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:grid;grid-template-columns:{{ cols.faq }};gap:40px clamp(40px,6vw,96px);align-items:start">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>{{ faq.eyebrow }}</div>
+      <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.4rem);margin:0">{{ faq.title }}</h2>
+      <p style="margin:8px 0 0;color:var(--muted)">{{ faq.aside }} <a href="{{ waMain }}" target="_blank" rel="noopener" style="color:var(--ink);font-weight:600">Envie uma mensagem.</a></p>
+    </div>
+    <div style="border-top:1px solid var(--line)">
+      <sc-for list="{{ faq.items }}" as="f" hint-placeholder-count="5">
+        <div style="border-bottom:1px solid var(--line)">
+          <h3 style="margin:0">
+            <button type="button" id="{{ f.btnId }}" aria-expanded="{{ f.open }}" aria-controls="{{ f.panelId }}" onClick="{{ f.toggle }}" style="all:unset;cursor:pointer;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 0;font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:clamp(1.15rem,1.6vw,1.35rem);line-height:1.3">
+              <span>{{ f.q }}</span>
+              <span aria-hidden="true" style="flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:20px;font-feature-settings:'liga';transition:transform .35s;transform:rotate({{ f.rot }})">add</span>
+            </button>
+          </h3>
+          <div id="{{ f.panelId }}" role="region" aria-labelledby="{{ f.btnId }}" style="display:grid;grid-template-rows:{{ f.rows }};transition:grid-template-rows .35s ease">
+            <div style="overflow:hidden"><p style="margin:0;padding:0 56px 24px 0;color:var(--muted);text-wrap:pretty">{{ f.a }}</p></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- 11 CTA FINAL -->
+<sc-if value="{{ show.cta }}" hint-placeholder-val="{{ true }}">
+<section id="agendar" data-screen-label="CTA final" style="order:{{ ord.cta }};scroll-margin-top:84px;padding:0 clamp(12px,2vw,24px)">
+  <div style="max-width:1400px;margin:0 auto;background:var(--primary);color:var(--on-primary);border-radius:calc(var(--r) * 1.6);overflow:hidden;display:grid;grid-template-columns:{{ cols.cta }};align-items:stretch">
+    <div style="padding:clamp(48px,7vw,104px) clamp(24px,5vw,80px);display:flex;flex-direction:column;justify-content:center;gap:24px">
+      <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.02;font-size:clamp(2.4rem,4.6vw,4.2rem);margin:0;text-wrap:balance">{{ cta.title }}</h2>
+      <p style="margin:0;font-size:1.1rem;max-width:30em;text-wrap:pretty">{{ cta.description }}</p>
+      <a href="{{ waMain }}" target="_blank" rel="noopener" style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 30px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--on-primary);color:var(--primary);font-weight:600;text-decoration:none;transition:transform .25s" style-hover="transform:translateY(-2px);color:var(--primary)">{{ cta.button }}<span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:20px;font-feature-settings:'liga'">arrow_outward</span></a>
+    </div>
+    <div style="min-height:320px;position:relative;background:color-mix(in oklab, var(--on-primary) 10%, var(--primary))">
+      <div style="position:absolute;inset:0"><image-slot id="{{ img.cta.id }}" src="{{ img.cta.src }}" shape="rect" placeholder="Imagem de apoio — ambiente / alimentos"></image-slot></div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- 12 CONTATO -->
+<sc-if value="{{ show.contact }}" hint-placeholder-val="{{ true }}">
+<section id="contato" data-screen-label="Contato" style="order:{{ ord.contact }};scroll-margin-top:84px;padding:clamp(112px,14vw,200px) 0">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:grid;grid-template-columns:{{ cols.contact }};gap:48px clamp(40px,6vw,96px)">
+    <div style="display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600"><span style="width:28px;height:1px;background:currentColor"></span>Contato</div>
+        <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.2rem,4vw,3.4rem);margin:0">{{ contact.title }}</h2>
+      </div>
+      <ul style="list-style:none;margin:0;padding:0;border-top:1px solid var(--line)">
+        <sc-for list="{{ contact.rows }}" as="r" hint-placeholder-count="4">
+          <li style="border-bottom:1px solid var(--line)">
+            <a href="{{ r.href }}" target="{{ r.target }}" rel="noopener" style="display:flex;align-items:center;gap:16px;padding:16px 0;text-decoration:none;color:var(--ink);min-height:44px" style-hover="color:var(--accent)">
+              <span aria-hidden="true" style="width:42px;height:42px;flex:none;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-family:'Material Symbols Outlined';font-size:20px;font-feature-settings:'liga'">{{ r.icon }}</span>
+              <span style="display:flex;flex-direction:column;line-height:1.3;min-width:0"><span style="font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600">{{ r.label }}</span><span style="overflow-wrap:anywhere">{{ r.value }}</span></span>
+            </a>
+          </li>
+        </sc-for>
+      </ul>
+      <sc-if value="{{ contact.hasHours }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600">Horários</span>
+          <sc-for list="{{ contact.hours }}" as="h" hint-placeholder-count="2">
+            <div style="display:flex;justify-content:space-between;gap:16px;font-size:0.97rem"><span>{{ h.days }}</span><span style="color:var(--muted)">{{ h.time }}</span></div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+    <sc-if value="{{ contact.showMap }}" hint-placeholder-val="{{ true }}">
+      <div style="border-radius:var(--r);overflow:hidden;background:var(--surface);min-height:420px;border:1px solid var(--line)">
+        <iframe title="{{ contact.mapTitle }}" src="{{ contact.mapSrc }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="border:0;width:100%;height:100%;min-height:420px;display:block;filter:grayscale(0.35)"></iframe>
+      </div>
+    </sc-if>
+  </div>
+</section>
+</sc-if>
+
+</main>
+
+<!-- 13 FOOTER -->
+<footer style="border-top:1px solid var(--line);margin-top:clamp(24px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(20px,5vw,56px) 28px;display:flex;flex-direction:column;gap:48px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:36px">
+      <div style="display:flex;flex-direction:column;gap:10px;grid-column:span {{ footerSpan }}">
+        <span style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);font-size:1.6rem;line-height:1.1">{{ brand.name }}</span>
+        <span style="color:var(--muted);font-size:0.95rem">{{ brand.title }} · {{ brand.crn }}</span>
+        <sc-if value="{{ footer.hasNote }}" hint-placeholder-val="{{ true }}"><span style="font-size:0.82rem;color:var(--muted);max-width:28em">{{ footer.note }}</span></sc-if>
+      </div>
+      <nav aria-label="Rodapé" style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px">Navegação</span>
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5"><a href="{{ n.href }}" style="text-decoration:none;font-size:0.95rem">{{ n.label }}</a></sc-for>
+      </nav>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px">Contato</span>
+        <sc-for list="{{ footer.links }}" as="fl" hint-placeholder-count="3"><a href="{{ fl.href }}" target="{{ fl.target }}" rel="noopener" style="text-decoration:none;font-size:0.95rem">{{ fl.label }}</a></sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding-top:24px;border-top:1px solid var(--line);font-size:0.82rem;color:var(--muted)">
+      <span>© {{ footer.year }} {{ brand.name }}. Todos os direitos reservados.</span>
+      <div style="display:flex;flex-wrap:wrap;gap:20px">
+        <a href="{{ footer.privacyHref }}" style="color:var(--muted)">Política de privacidade</a>
+        <a href="Documentacao.dc.html" style="color:var(--muted)">Nutri White Label</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ fab.enabled }}" hint-placeholder-val="{{ false }}">
+  <a href="{{ waMain }}" target="_blank" rel="noopener" aria-label="{{ fab.aria }}" style="position:fixed;right:20px;bottom:20px;z-index:60;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:56px;height:56px;padding:0 {{ fab.pad }};border-radius:999px;background:var(--primary);color:var(--on-primary);text-decoration:none;font-weight:600;font-size:0.92rem;white-space:nowrap;box-shadow:0 16px 36px -14px rgba(0,0,0,.45);transition:opacity .35s,transform .35s;opacity:{{ fab.opacity }};transform:translateY({{ fab.y }});pointer-events:{{ fab.pe }}" style-hover="color:var(--on-primary)">
+    <span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:24px;font-feature-settings:'liga'">chat</span>
+    <sc-if value="{{ fab.showLabel }}" hint-placeholder-val="{{ true }}"><span>{{ fab.label }}</span></sc-if>
+  </a>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tenant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;clinico&quot;,&quot;esportivo&quot;,&quot;materno&quot;,&quot;idosos&quot;,&quot;minimo&quot;],&quot;default&quot;:&quot;clinico&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;White Label&quot;},&quot;showDemoBar&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;White Label&quot;},&quot;previewTestimonials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Pré-visualização&quot;}}">
+class Component extends DCLogic {
+  state = { vw: window.innerWidth, scrolled: false, menu: false, faq: 0, spec: 0, override: null, tick: 0 };
+  rootRef = React.createRef();
+  start = Date.now();
+
+  componentDidMount() {
+    this.onR = () => this.setState({ vw: window.innerWidth });
+    this.onS = () => { const s = window.scrollY > 520; if (s !== this.state.scrolled) this.setState({ scrolled: s }); };
+    window.addEventListener('resize', this.onR);
+    window.addEventListener('scroll', this.onS, { passive: true });
+    this.poll = setInterval(() => { if (this.isReady()) { clearInterval(this.poll); this.setState({ tick: 1 }); } }, 40);
+    this.sync();
+  }
+  componentDidUpdate(pp) {
+    if (pp.tenant !== this.props.tenant && this.state.override) this.setState({ override: null, spec: 0, faq: 0 });
+    this.sync();
+  }
+  componentWillUnmount() { clearInterval(this.poll); window.removeEventListener('resize', this.onR); window.removeEventListener('scroll', this.onS); }
+
+  isReady() {
+    const C = window.NWLCore;
+    if (!C || !C.ready() || !C.list().length) return false;
+    const want = this.state.override || this.props.tenant || 'premium';
+    return C.has(want) || Date.now() - this.start > 1500;
+  }
+  clientId() { return window.NWLCore.pickClient(this.state.override || this.props.tenant || 'premium'); }
+  config() {
+    const id = this.clientId();
+    if (this._cid !== id) { this._cid = id; this._cfg = window.NWLCore.resolve(id); }
+    return this._cfg;
+  }
+  sync() {
+    if (!this.isReady()) return;
+    const cfg = this.config();
+    if (this._applied === this._cid) return;
+    this._applied = this._cid;
+    window.NWLCore.applyTheme(cfg);
+    window.NWLCore.applySeo(cfg);
+    const w = window.NWLCore.validate(cfg);
+    if (w.length) console.info('[Nutri White Label] ' + this._cid + ': ' + w.join(' · '));
+  }
+
+  renderVals() {
+    if (!this.isReady()) return { showBanner: false, show: {}, fab: {} };
+    const C = window.NWLCore, cfg = this.config(), cid = this._cid;
+    const p = cfg.professional, c = cfg.contact, h = cfg.hero, b = cfg.branding;
+    const vw = this.state.vw, isMobile = vw < 760, isWide = vw >= 980;
+    const one = 'minmax(0,1fr)';
+    const wa = (msg, extra) => C.whatsapp(cfg, msg, extra);
+    const waMain = wa();
+    const digits = s => String(s || '').replace(/\D/g, '');
+    const fmtPhone = s => { const d = digits(s); if (d.length < 12) return s || ''; const r = d.slice(4); return '+' + d.slice(0, 2) + ' (' + d.slice(2, 4) + ') ' + r.slice(0, -4) + '-' + r.slice(-4); };
+    const img = (key, src) => ({ id: cid + '-' + key, src: src || undefined });
+    const name = p.name || 'Nutricionista';
+    const initials = name.split(/\s+/).filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    const cityLine = [c.city, c.state].filter(Boolean).join(' - ');
+    const mapsQ = c.mapsQuery || [c.address, cityLine].filter(Boolean).join(', ');
+    const mapsUrl = mapsQ ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(mapsQ) : '#contato';
+    const ig = c.instagram ? String(c.instagram).replace(/^@/, '') : '';
+
+    const specItems = (cfg.specialties.items || []).filter(s => s && s.name);
+    const trust = (cfg.trust.items || []).filter(t => t && t.value);
+    const steps = (cfg.process.steps || []).filter(s => s && s.title);
+    const diffs = (cfg.differentials.items || []).filter(d => d && d.title);
+    const modDefaults = { presencial: ['location_on', 'Como chegar'], online: ['videocam', 'Agendar online'], domiciliar: ['home', 'Consultar minha região'] };
+    const mods = (cfg.modalities.items || []).filter(m => m && m.enabled !== false && m.title).map(m => {
+      const d = modDefaults[m.type] || ['event', 'Saiba mais'];
+      const href = m.href || (m.type === 'presencial' ? mapsUrl
+        : wa(m.type === 'online' ? 'Olá, {nome}! Gostaria de agendar uma consulta online.' : 'Olá, {nome}! Gostaria de saber se o atendimento domiciliar chega à minha região.'));
+      return { icon: m.icon || d[0], title: m.title, description: m.description || '', details: m.details || [], href, linkLabel: m.linkLabel || d[1] };
+    });
+    const realTesti = (cfg.testimonials.items || []).filter(t => t && t.text && t.authorized !== false);
+    const previewT = !realTesti.length && !!this.props.previewTestimonials;
+    const testiItems = (previewT ? [1, 2, 3].map(i => ({ text: 'Depoimento autorizado do paciente aparecerá aqui.', name: 'Nome ou iniciais autorizadas', detail: 'Especialidade · ano', placeholder: true })) : realTesti).map(t => {
+      const r = Math.max(0, Math.min(5, Number(t.rating) || 0));
+      return { text: t.text, name: t.name || 'Paciente', detail: t.detail || '', photo: t.photo, hasPhoto: !!t.photo, hasRating: r > 0, stars: Array.from({ length: r }, (_, i) => i), ratingLabel: r + ' de 5', color: t.placeholder ? 'var(--muted)' : 'var(--ink)' };
+    });
+    const faqs = (cfg.faq.items || []).filter(f => f && f.q && f.a);
+
+    const en = cfg.sections.enabled || {};
+    const has = { hero: true, trust: trust.length > 0, about: true, specialties: specItems.length > 0, process: steps.length > 0, differentials: diffs.length > 0, modalities: mods.length > 0, testimonials: testiItems.length > 0, faq: faqs.length > 0, cta: true, contact: true };
+    const show = {}; C.SECTION_KEYS.forEach(k => { show[k] = en[k] !== false && has[k]; });
+    show.trust = false;
+    const order = (cfg.sections.order || []).filter(k => C.SECTION_KEYS.includes(k));
+    C.SECTION_KEYS.forEach(k => { if (!order.includes(k)) order.push(k); });
+    const ord = {}; order.forEach((k, i) => { ord[k] = i; });
+    const anchors = { about: '#sobre', specialties: '#especialidades', process: '#como-funciona', testimonials: '#depoimentos', faq: '#duvidas', contact: '#contato' };
+    const nav = order.filter(k => anchors[k] && show[k] && cfg.nav[k]).map(k => ({ label: cfg.nav[k], href: anchors[k] }));
+
+    const sIdx = specItems.length ? this.state.spec % specItems.length : 0;
+    const specMsg = cfg.specialties.message;
+    const specs = specItems.map((s, i) => ({
+      name: s.name, description: s.description || '', goals: s.goals || [], num: String(i + 1).padStart(2, '0'),
+      active: i === sIdx, color: i === sIdx ? 'var(--ink)' : 'var(--muted)', indent: i === sIdx ? '12px' : '0px', arrow: i === sIdx ? 1 : 0,
+      select: () => { if (this.state.spec !== i) this.setState({ spec: i }); },
+      wa: wa(s.whatsappMessage || specMsg, { especialidade: s.name.toLowerCase() }),
+      imgId: cid + '-esp-' + (s.id || i), imgSrc: s.image || undefined
+    }));
+
+    const rows = [];
+    if (c.whatsapp) rows.push({ icon: 'chat', label: 'WhatsApp', value: fmtPhone(c.whatsapp), href: waMain, target: '_blank' });
+    if (c.phone) rows.push({ icon: 'call', label: 'Telefone', value: fmtPhone(c.phone), href: 'tel:+' + digits(c.phone), target: '_self' });
+    if (c.email) rows.push({ icon: 'mail', label: 'E-mail', value: c.email, href: 'mailto:' + c.email, target: '_self' });
+    if (ig) rows.push({ icon: 'photo_camera', label: 'Instagram', value: '@' + ig, href: 'https://instagram.com/' + ig, target: '_blank' });
+    if (c.address || cityLine) rows.push({ icon: 'location_on', label: 'Endereço', value: [c.address, cityLine].filter(Boolean).join(' · '), href: mapsUrl, target: '_blank' });
+    const showMap = !!(c.showMap && mapsQ);
+
+    const clients = C.list().map(id => {
+      const on = id === cid;
+      return { label: (window.NWL_CLIENTS[id].meta && window.NWL_CLIENTS[id].meta.label) || id, pressed: on,
+        bg: on ? 'var(--bg)' : 'transparent', fg: on ? 'var(--ink)' : 'var(--bg)', border: on ? 'var(--bg)' : 'color-mix(in oklab, var(--bg) 35%, transparent)',
+        select: () => this.setState({ override: id, spec: 0, faq: 0, menu: false }) };
+    });
+    const fabOn = cfg.floatingWhatsApp.enabled !== false;
+    const fabVisible = this.state.scrolled;
+
+    return {
+      rootRef: this.rootRef,
+      showBanner: !!cfg.meta.demo && this.props.showDemoBar !== false,
+      clients,
+      brand: { name, title: p.title || 'Nutricionista', crn: p.crn || '', initials, logo: b.logo, hasLogo: !!b.logo, noLogo: !b.logo },
+      nav, isDesktopNav: vw >= 1080, isMobileNav: vw < 1080,
+      menuOpen: this.state.menu, menuIcon: this.state.menu ? 'close' : 'menu',
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu })), closeMenu: () => this.setState({ menu: false }),
+      waMain, isWide, isNarrow: !isWide, ctaDir: isMobile ? 'column' : 'row',
+      show, ord,
+      cols: { about: isWide ? 'minmax(0,5fr) minmax(0,6fr)' : one, header: isWide ? 'minmax(0,1.3fr) minmax(0,1fr)' : one, diff: isWide ? 'minmax(0,1fr) minmax(0,1.5fr)' : one,
+        faq: isWide ? 'minmax(0,1fr) minmax(0,1.6fr)' : one, cta: vw >= 860 ? 'minmax(0,1.25fr) minmax(0,1fr)' : one, contact: isWide && showMap ? 'minmax(0,1fr) minmax(0,1.2fr)' : one },
+      hero: { eyebrow: h.eyebrow, title: h.title, titleEmphasis: h.titleEmphasis, titleAfter: h.titleAfter, description: h.description,
+        primaryCta: h.primaryCta || 'Agendar consulta', secondaryCta: h.secondaryCta, secondaryHref: h.secondaryHref || '#contato',
+        badges: h.badges || [], hasBadges: !!(h.badges && h.badges.length), showSecondary: !!h.showSecondaryImage && vw >= 420 },
+      img: { hero: img('hero', h.image), hero2: img('hero-2', h.secondaryImage), about: img('sobre', cfg.about.image || p.photo), cta: img('cta', cfg.cta.image) },
+      trust,
+      about: { eyebrow: cfg.about.eyebrow, title: cfg.about.title || name, story: p.story || [], approach: p.approach, hasApproach: !!p.approach,
+        education: p.education || [], hasEducation: !!(p.education && p.education.length), cta: cfg.about.cta },
+      spec: { eyebrow: cfg.specialties.eyebrow, title: cfg.specialties.title, intro: cfg.specialties.intro || '', cta: cfg.specialties.cta, items: specs, active: specs[sIdx] || { goals: [] } },
+      process: { eyebrow: cfg.process.eyebrow, title: cfg.process.title, steps: steps.map((s, i) => ({ ...s, icon: s.icon || 'radio_button_unchecked', num: String(i + 1).padStart(2, '0') })) },
+      diff: { eyebrow: cfg.differentials.eyebrow, title: cfg.differentials.title, items: diffs.map(d => ({ ...d, icon: d.icon || 'check' })) },
+      mods: { eyebrow: cfg.modalities.eyebrow, title: cfg.modalities.title, items: mods },
+      testi: { eyebrow: cfg.testimonials.eyebrow, title: cfg.testimonials.title, items: testiItems, isPreview: previewT },
+      faq: { eyebrow: cfg.faq.eyebrow, title: cfg.faq.title, aside: cfg.faq.aside,
+        items: faqs.map((f, i) => { const open = this.state.faq === i; return { q: f.q, a: f.a, open, rows: open ? '1fr' : '0fr', rot: open ? '45deg' : '0deg',
+          btnId: 'faq-b-' + i, panelId: 'faq-p-' + i, toggle: () => this.setState({ faq: open ? -1 : i }) }; }) },
+      cta: cfg.cta,
+      contact: { title: 'Fale com ' + (p.shortName || name.split(' ')[0]), rows, hours: c.hours || [], hasHours: !!(c.hours && c.hours.length),
+        showMap, mapSrc: showMap ? 'https://maps.google.com/maps?q=' + encodeURIComponent(mapsQ) + '&z=15&output=embed' : undefined, mapTitle: 'Mapa — ' + mapsQ,
+        hasInstagram: !!ig, instagram: '@' + ig, instagramUrl: 'https://instagram.com/' + ig },
+      footer: { year: new Date().getFullYear(), note: cfg.footer.note, hasNote: !!cfg.footer.note, privacyHref: (cfg.footer.privacyHref || 'Politica de Privacidade.dc.html') + '?cliente=' + cid,
+        links: rows.filter(r => r.icon !== 'location_on').map(r => ({ label: r.label, href: r.href, target: r.target })) },
+      footerSpan: vw >= 760 ? 2 : 1,
+      fab: { enabled: fabOn, label: cfg.floatingWhatsApp.label || 'Agendar', aria: 'Agendar pelo WhatsApp com ' + name, showLabel: !isMobile, pad: isMobile ? '0px' : '22px',
+        opacity: fabVisible ? 1 : 0, y: fabVisible ? '0px' : '16px', pe: fabVisible ? 'auto' : 'none' }
+    };
+  }
+}
+</script>
+</body>
+</html>

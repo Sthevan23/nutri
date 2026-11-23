@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="./nwl/core.js"></script>
+<script src="./config/defaults.js"></script>
+<script src="./config/clients/clinico.js"></script>
+<script src="./config/clients/esportivo.js"></script>
+<script src="./config/clients/materno.js"></script>
+<script src="./config/clients/idosos.js"></script>
+<script src="./config/clients/minimo.js"></script>
+<style>
+body{margin:0;background:#F4F1EB;color:#1D2320;font-family:'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#2C4A3E;text-underline-offset:3px}
+a:hover{color:#A35A3E}
+html{scroll-behavior:smooth}
+</style>
+</helmet>
+
+<div style="max-width:1120px;margin:0 auto;padding:clamp(32px,6vw,80px) clamp(20px,5vw,56px);line-height:1.65;font-size:1rem">
+
+<header style="display:flex;flex-direction:column;gap:16px;padding-bottom:40px;border-bottom:1px solid rgba(29,35,32,.14)">
+  <div style="font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:#58605B;font-weight:600">Nutri White Label · v1.0 · documentação</div>
+  <h1 style="font-family:'Newsreader',Georgia,serif;font-weight:400;font-size:clamp(2.4rem,5vw,4rem);line-height:1.05;margin:0;letter-spacing:-0.015em">Um código, <em style="color:#A35A3E">muitos nutricionistas</em>.</h1>
+  <p style="margin:0;max-width:44em;color:#58605B;font-size:1.1rem">Diagnóstico, arquitetura, guia de configuração, resultados de teste e exportação das configurações. A landing page é <a href="Nutri White Label.dc.html">Nutri White Label.dc.html</a>; a política de privacidade é <a href="Politica de Privacidade.dc.html">Politica de Privacidade.dc.html</a>.</p>
+  <nav aria-label="Seções" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+    <a href="#pesquisa" style="padding:6px 14px;border:1px solid rgba(29,35,32,.18);border-radius:999px;text-decoration:none;font-size:0.88rem">1 · Pesquisa</a>
+    <a href="#arquitetura" style="padding:6px 14px;border:1px solid rgba(29,35,32,.18);border-radius:999px;text-decoration:none;font-size:0.88rem">2 · Arquitetura</a>
+    <a href="#design" style="padding:6px 14px;border:1px solid rgba(29,35,32,.18);border-radius:999px;text-decoration:none;font-size:0.88rem">3 · Design</a>
+    <a href="#guia" style="padding:6px 14px;border:1px solid rgba(29,35,32,.18);border-radius:999px;text-decoration:none;font-size:0.88rem">4 · Guia</a>
+    <a href="#testes" style="padding:6px 14px;border:1px solid rgba(29,35,32,.18);border-radius:999px;text-decoration:none;font-size:0.88rem">5 · Testes</a>
+    <a href="#exportar" style="padding:6px 14px;border:1px solid rgba(29,35,32,.18);border-radius:999px;text-decoration:none;font-size:0.88rem">6 · Exportar JSON</a>
+  </nav>
+</header>
+
+<section id="pesquisa" style="padding:56px 0;border-bottom:1px solid rgba(29,35,32,.14);display:flex;flex-direction:column;gap:24px;scroll-margin-top:16px">
+  <h2 style="font-family:'Newsreader',Georgia,serif;font-weight:400;font-size:2.2rem;margin:0;line-height:1.1">1 · Auditoria e análise das referências</h2>
+  <div style="background:#FBF9F5;border:1px solid rgba(29,35,32,.14);border-radius:14px;padding:20px 24px">
+    <strong style="display:block;margin-bottom:6px">Limitação registrada</strong>
+    <span style="color:#58605B">Nesta etapa foram lidos 5 dos 16 sites (conteúdo textual, sem inspeção visual ou mobile): laranutricionista.com, anutridosidosos.com.br, nutricionistajuliana.com.br/nutricionista-gestantes, quironsalud.com (consulta de nutrição) e doctoralia.com.br/perfil/mario-rabelo. O site ricardosantosnutricionista.com.br <strong>recusou o acesso</strong>. Os outros 10 não foram analisados nesta sessão e nenhuma conclusão sobre eles foi inventada. O projeto não tinha código anterior: a stack foi definida do zero (HTML + JS sem build, configuração em arquivos JS por cliente).</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-size:1.05rem">Padrões que funcionam</h3>
+      <ul style="margin:0;padding-left:18px;color:#3B423E;display:flex;flex-direction:column;gap:6px">
+        <li>Hero com especialidade + local + modalidade na mesma linha (Lara Lima: "Nutricionista Clínica · CRN · presencial e online").</li>
+        <li>WhatsApp com mensagem pré-preenchida em todos os CTAs.</li>
+        <li>Processo em 4 etapas numeradas — reduz a ansiedade da primeira consulta.</li>
+        <li>FAQ longo respondendo objeções reais: duração, convênio, retorno, suplementação, prazo de resultado.</li>
+        <li>Páginas por especialidade com cidade no título ("Nutricionista para gestantes em SP") — forte para SEO local.</li>
+        <li>CRN visível no hero e no rodapé.</li>
+      </ul>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-size:1.05rem">Autoridade e confiança</h3>
+      <ul style="margin:0;padding-left:18px;color:#3B423E;display:flex;flex-direction:column;gap:6px">
+        <li>Princípios declarados (escuta, individualidade, evidência) em vez de adjetivos genéricos.</li>
+        <li>Transparência ("não tenho parcerias com marcas", "suplementos só quando necessário") — perfil Doctoralia.</li>
+        <li>Trabalho integrado com médico/obstetra — gestantes e Quirónsalud.</li>
+        <li>Público explícito ("exclusivamente pessoas idosas") dá foco e confiança.</li>
+      </ul>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 style="margin:0;font-size:1.05rem">Pontos negativos a evitar</h3>
+      <ul style="margin:0;padding-left:18px;color:#3B423E;display:flex;flex-direction:column;gap:6px">
+        <li>Lista de patologias sem descrição (10 títulos soltos) — sem benefício nem próximo passo.</li>
+        <li>Estatísticas de efeito ("reduz em até 50%") na página de venda — risco ético e regulatório.</li>
+        <li>Menus enormes misturando B2C e B2B; ícones emoji (✉ ☎ ⌂).</li>
+        <li>Texto corrido longo sem hierarquia; dezenas de serviços com o mesmo preço.</li>
+        <li>Construtores genéricos (Wix): blocos sem conteúdo ("Clientes felizes") e alt-text pobre.</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin:0;color:#58605B">Como o produto responde: especialidades em painel interativo (nome → descrição → objetivos → CTA com a especialidade na mensagem), FAQ configurável, CRN em 4 pontos da página, sem números de resultado, depoimentos apenas autorizados, e seção que some quando não há conteúdo.</p>
+</section>
+
+<section id="arquitetura" style="padding:56px 0;border-bottom:1px solid rgba(29,35,32,.14);display:flex;flex-direction:column;gap:24px;scroll-margin-top:16px">
+  <h2 style="font-family:'Newsreader',Georgia,serif;font-weight:400;font-size:2.2rem;margin:0;line-height:1.1">2 · Arquitetura white label</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px;align-items:start">
+    <pre style="margin:0;background:#1D2320;color:#E9E3D8;border-radius:14px;padding:24px;font-family:'JetBrains Mono',monospace;font-size:0.82rem;line-height:1.7;overflow:auto">Nutri White Label.dc.html   ← landing (componentes)
+Politica de Privacidade.dc.html
+Documentacao.dc.html
+nwl/
+  core.js                   ← merge, tema, SEO, WhatsApp
+config/
+  defaults.js               ← fallback neutro
+  clients/
+    clinico.js              ← demo (fictício)
+    esportivo.js
+    materno.js
+    idosos.js
+    minimo.js               ← teste de config incompleta
+deploy/
+  robots.txt · sitemap.xml  ← modelos por domínio
+image-slot.js               ← placeholders de imagem</pre>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div><strong>Separação total.</strong> <span style="color:#3B423E">O componente não contém nenhum texto, cor ou contato de cliente. Tudo vem de <code>NWLCore.resolve(id)</code> = <code>defaults</code> + <code>clients/&lt;id&gt;.js</code>, mesclado em profundidade. Arrays (especialidades, FAQ…) substituem por inteiro.</span></div>
+      <div><strong>Isolamento.</strong> <span style="color:#3B423E">Cada resolução devolve uma cópia nova; nada é mutado. Imagens usam ids prefixados pelo cliente (<code>clinico-hero</code>), então uma foto nunca vaza para outra instalação.</span></div>
+      <div><strong>Tema por CSS variables.</strong> <span style="color:#3B423E">Toda a interface usa <code>var(--primary)</code>, <code>var(--hf)</code>, <code>var(--r)</code> etc. <code>applyTheme</code> grava as variáveis no &lt;html&gt; e carrega as fontes do cliente.</span></div>
+      <div><strong>Identificação do cliente.</strong> <span style="color:#3B423E">Recomendado: <em>uma publicação por cliente</em> — o build copia somente o arquivo do cliente e define <code>window.NWL_DEFAULT_CLIENT</code>. Sem multi-tenant em runtime, sem dados de outros clientes no pacote. Em preview, <code>?cliente=id</code> troca a configuração. Quando houver muitos clientes, o mesmo resolvedor aceita mapear domínio → id.</span></div>
+      <div><strong>Falhas seguras.</strong> <span style="color:#3B423E">Campo ausente → default. Seção sem conteúdo → oculta. Sem WhatsApp → CTAs usam e-mail ou âncora de contato. <code>validate()</code> avisa no console (ex.: CRN ausente).</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="design" style="padding:56px 0;border-bottom:1px solid rgba(29,35,32,.14);display:flex;flex-direction:column;gap:20px;scroll-margin-top:16px">
+  <h2 style="font-family:'Newsreader',Georgia,serif;font-weight:400;font-size:2.2rem;margin:0;line-height:1.1">3 · Sistema visual</h2>
+  <p style="margin:0;max-width:46em;color:#3B423E">Editorial: título serifado grande com uma palavra de ênfase, linhas finas no lugar de caixas, poucas superfícies cheias (Diferenciais e CTA final), retrato em arco como único elemento orgânico. Cada cliente define 10 cores, 2 fontes, raio, raio de botão, formato do retrato (<code>arch</code>/<code>rect</code>) e escala tipográfica (idosos usa 1.12).</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px">
+    <sc-for list="{{ palettes }}" as="pl" hint-placeholder-count="4">
+      <div style="border:1px solid rgba(29,35,32,.14);border-radius:14px;overflow:hidden;background:#FBF9F5">
+        <div style="display:flex;height:56px"><sc-for list="{{ pl.swatches }}" as="sw"><span title="{{ sw }}" style="flex:1;background:{{ sw }}"></span></sc-for></div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:2px"><strong style="font-size:0.95rem">{{ pl.label }}</strong><span style="font-size:0.82rem;color:#58605B">{{ pl.fonts }}</span><a href="{{ pl.href }}" style="font-size:0.85rem;margin-top:6px">Abrir landing</a></div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="guia" style="padding:56px 0;border-bottom:1px solid rgba(29,35,32,.14);display:flex;flex-direction:column;gap:28px;scroll-margin-top:16px">
+  <h2 style="font-family:'Newsreader',Georgia,serif;font-weight:400;font-size:2.2rem;margin:0;line-height:1.1">4 · Guia de configuração</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:28px 40px">
+    <div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:1.1rem">Adicionar um nutricionista</h3><ol style="margin:0;padding-left:20px;color:#3B423E"><li>Duplique <code>config/clients/minimo.js</code> como <code>config/clients/ana-souza.js</code>.</li><li>Troque a chave: <code>window.NWL_CLIENTS['ana-souza'] = {…}</code>.</li><li>Preencha só o que for diferente do padrão.</li><li>Adicione o <code>&lt;script&gt;</code> do arquivo no &lt;helmet&gt; e teste com <code>?cliente=ana-souza</code>.</li></ol></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:1.1rem">Mudar cores e fontes</h3><pre style="margin:0;background:#1D2320;color:#E9E3D8;border-radius:10px;padding:16px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;overflow:auto">branding: {
+  radius: 18, buttonRadius: 999, heroShape: 'arch', scale: 1,
+  colors: { bg, surface, card, ink, muted, line,
+            primary, onPrimary, accent, onAccent },
+  fonts: { heading: 'Newsreader', body: 'Hanken Grotesk',
+           headingWeight: 400, emphasisStyle: 'italic',
+           googleFontsHref: 'https://fonts.googleapis.com/…' }
+}</pre><span style="color:#58605B;font-size:0.9rem">Garanta contraste de 4.5:1 entre <code>ink</code>/<code>bg</code> e <code>onPrimary</code>/<code>primary</code>.</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:1.1rem">Mudar imagens</h3><span style="color:#3B423E">Duas formas: (a) arraste a foto sobre o espaço reservado na própria página — fica salva para aquele cliente; (b) informe a URL em <code>hero.image</code>, <code>hero.secondaryImage</code>, <code>about.image</code>, <code>cta.image</code> e <code>specialties.items[].image</code>. Use WebP, retrato 4:5 com ~1200px de altura.</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:1.1rem">Textos e títulos</h3><span style="color:#3B423E">O título do hero tem três partes: <code>title</code> + <code>titleEmphasis</code> (destacada) + <code>titleAfter</code>. Cada seção tem <code>eyebrow</code> e <code>title</code>. Rótulos do menu ficam em <code>nav</code>.</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:1.1rem">Especialidades</h3><pre style="margin:0;background:#1D2320;color:#E9E3D8;border-radius:10px;padding:16px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;overflow:auto">specialties: { items: [
+  { id: 'gestacao', name: 'Gestação',
+    description: '…', goals: ['…', '…'],
+    image: '', whatsappMessage: '' }  // opcional
+]}</pre><span style="color:#58605B;font-size:0.9rem">Quantidade livre. Lista vazia oculta a seção.</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:1.1rem">WhatsApp</h3><span style="color:#3B423E"><code>contact.whatsapp</code> com DDI+DDD só números (<code>5537999990000</code>). <code>contact.whatsappMessage</code> aceita <code>{nome}</code> e <code>{cidade}</code>; <code>specialties.message</code> aceita <code>{especialidade}</code>. Todos os CTAs, o botão flutuante e os cards de modalidade usam esse número.</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:1.1rem">Ocultar e reordenar seções</h3><pre style="margin:0;background:#1D2320;color:#E9E3D8;border-radius:10px;padding:16px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;overflow:auto">sections: {
+  order: ['hero','about','specialties','process', …],
+  enabled: { testimonials: false, trust: false }
+}</pre></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:1.1rem">Publicar um novo cliente</h3><ol style="margin:0;padding-left:20px;color:#3B423E"><li>Copie os arquivos do produto + <em>apenas</em> o arquivo do cliente.</li><li>Defina <code>window.NWL_DEFAULT_CLIENT = 'ana-souza'</code> em defaults.js.</li><li>Preencha <code>seo.canonical</code> com o domínio e remova <code>noindex</code>.</li><li>Ajuste <code>deploy/robots.txt</code> e <code>sitemap.xml</code> com o domínio.</li><li>Confira o CRN, o número de WhatsApp e a política de privacidade antes de publicar.</li></ol></div>
+  </div>
+  <div style="background:#FBF9F5;border:1px solid rgba(29,35,32,.14);border-radius:14px;padding:20px 24px;color:#3B423E"><strong style="color:#1D2320">Ética e LGPD.</strong> Não publique depoimentos sem autorização escrita (campo <code>authorized</code>), números de resultado, promessas ou fotos de pacientes. O schema.org gerado não inclui avaliações nem notas. Textos, imagens e cores são públicos — nunca coloque tokens ou chaves nestes arquivos.</div>
+</section>
+
+<section id="testes" style="padding:56px 0;border-bottom:1px solid rgba(29,35,32,.14);display:flex;flex-direction:column;gap:20px;scroll-margin-top:16px">
+  <h2 style="font-family:'Newsreader',Georgia,serif;font-weight:400;font-size:2.2rem;margin:0;line-height:1.1">5 · Testes automáticos de configuração</h2>
+  <p style="margin:0;color:#58605B">Executados agora, no navegador, sobre as configurações carregadas.</p>
+  <div style="overflow:auto;border:1px solid rgba(29,35,32,.14);border-radius:14px;background:#FBF9F5">
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;min-width:640px">
+      <thead><tr><th style="text-align:left;padding:12px 16px;border-bottom:1px solid rgba(29,35,32,.14)">Cliente</th><sc-for list="{{ testCols }}" as="tc"><th style="text-align:left;padding:12px 16px;border-bottom:1px solid rgba(29,35,32,.14);font-weight:600">{{ tc }}</th></sc-for></tr></thead>
+      <tbody>
+        <sc-for list="{{ tests }}" as="t" hint-placeholder-count="5">
+          <tr><td style="padding:12px 16px;border-bottom:1px solid rgba(29,35,32,.08);font-weight:600">{{ t.label }}</td><sc-for list="{{ t.cells }}" as="cell"><td style="padding:12px 16px;border-bottom:1px solid rgba(29,35,32,.08);color:{{ cell.color }}">{{ cell.text }}</td></sc-for></tr>
+        </sc-for>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="exportar" style="padding:56px 0;display:flex;flex-direction:column;gap:20px;scroll-margin-top:16px">
+  <h2 style="font-family:'Newsreader',Georgia,serif;font-weight:400;font-size:2.2rem;margin:0;line-height:1.1">6 · Exportar configuração (JSON)</h2>
+  <p style="margin:0;color:#58605B;max-width:44em">Baixe a configuração bruta do cliente (só o que ele define) ou a resolvida (mesclada com os defaults) — útil para migrar para um CMS ou painel no futuro.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+    <label for="exp-client" style="font-size:0.9rem;font-weight:600">Cliente</label>
+    <select id="exp-client" value="{{ expId }}" onChange="{{ onExpChange }}" style="font:inherit;padding:10px 14px;border-radius:10px;border:1px solid rgba(29,35,32,.2);background:#FBF9F5;min-height:44px">
+      <sc-for list="{{ clientOpts }}" as="o"><option value="{{ o.id }}">{{ o.label }}</option></sc-for>
+    </select>
+    <button type="button" onClick="{{ downloadRaw }}" style="font:inherit;font-weight:600;cursor:pointer;min-height:44px;padding:0 18px;border-radius:999px;border:0;background:#2C4A3E;color:#F4F1EB">Baixar JSON do cliente</button>
+    <button type="button" onClick="{{ downloadResolved }}" style="font:inherit;font-weight:600;cursor:pointer;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid #1D2320;background:transparent;color:#1D2320">Baixar JSON resolvido</button>
+    <button type="button" onClick="{{ copyJson }}" style="font:inherit;cursor:pointer;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(29,35,32,.2);background:transparent;color:#1D2320">{{ copyLabel }}</button>
+  </div>
+  <pre style="margin:0;background:#1D2320;color:#E9E3D8;border-radius:14px;padding:24px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;line-height:1.6;max-height:420px;overflow:auto">{{ jsonPreview }}</pre>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { exp: 'clinico', copied: false, t: 0 };
+  componentDidMount() { this.p = setInterval(() => { if (window.NWLCore && window.NWL_DEFAULTS) { clearInterval(this.p); this.setState({ t: 1 }); } }, 50); }
+  componentWillUnmount() { clearInterval(this.p); }
+  dl(obj, name) {
+    const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+  renderVals() {
+    const C = window.NWLCore, all = window.NWL_CLIENTS || {};
+    if (!C || !window.NWL_DEFAULTS) return { palettes: [], tests: [], clientOpts: [] };
+    const ids = C.list();
+    const exp = all[this.state.exp] ? this.state.exp : ids[0];
+    const resolved = ids.map(id => [id, C.resolve(id)]);
+    const label = id => (all[id].meta && all[id].meta.label) || id;
+    const palettes = resolved.filter(([id]) => id !== 'minimo').map(([id, c]) => {
+      const k = c.branding.colors;
+      return { label: label(id), fonts: c.branding.fonts.heading + ' / ' + c.branding.fonts.body, swatches: [k.bg, k.surface, k.ink, k.primary, k.accent], href: 'Nutri White Label.dc.html?cliente=' + id };
+    });
+    const ok = (b, t) => ({ text: (b ? '✓ ' : '✕ ') + t, color: b ? '#2C4A3E' : '#A33A2A' });
+    const tests = resolved.map(([id, c]) => {
+      const others = resolved.filter(([o]) => o !== id).map(([, oc]) => oc);
+      const num = String(c.contact.whatsapp || '').replace(/\D/g, '');
+      const link = C.whatsapp(c);
+      const leak = others.some(oc => oc.professional.name !== window.NWL_DEFAULTS.professional.name && JSON.stringify(c).includes(oc.professional.name));
+      const uniqueColor = others.every(oc => oc.branding.colors.primary !== c.branding.colors.primary) || id === 'minimo';
+      const warns = C.validate(c);
+      return { label: label(id), cells: [
+        ok(!!c.professional.name, c.professional.name),
+        ok(uniqueColor, c.branding.colors.primary),
+        ok(true, (c.specialties.items || []).length + ' itens'),
+        ok(num ? link.includes(num) : link !== '', num ? 'wa.me/…' + num.slice(-4) : 'fallback'),
+        ok(!leak, leak ? 'vazamento' : 'isolado'),
+        { text: warns.length ? warns.length + ' aviso(s)' : 'sem avisos', color: warns.length ? '#8A6429' : '#2C4A3E' }
+      ] };
+    });
+    const raw = all[exp] || {};
+    return {
+      palettes, tests, testCols: ['Nome', 'Cor primária', 'Especialidades', 'WhatsApp', 'Dados de outros', 'Validação'],
+      clientOpts: ids.map(id => ({ id, label: label(id) })), expId: exp,
+      onExpChange: e => this.setState({ exp: e.target.value }),
+      downloadRaw: () => this.dl(raw, 'nwl-' + exp + '.json'),
+      downloadResolved: () => this.dl(C.resolve(exp), 'nwl-' + exp + '.resolved.json'),
+      copyJson: () => { navigator.clipboard && navigator.clipboard.writeText(JSON.stringify(raw, null, 2)); this.setState({ copied: true }); setTimeout(() => this.setState({ copied: false }), 1600); },
+      copyLabel: this.state.copied ? 'Copiado' : 'Copiar',
+      jsonPreview: JSON.stringify(raw, null, 2)
+    };
+  }
+}
+</script>
+</body>
+</html>
