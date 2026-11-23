@@ -80,7 +80,7 @@ button { font: inherit; color: inherit; }
 .hero { padding: clamp(40px, 6vw, 88px) 0 clamp(72px, 9vw, 120px); }
 .hero-grid { display: grid; gap: clamp(40px, 6vw, 80px); align-items: center; }
 .hero-copy { display: flex; flex-direction: column; gap: 24px; }
-.hero-title { font-family: var(--hf); font-weight: var(--hw); letter-spacing: var(--hls); text-transform: var(--ht); line-height: 1.02; font-size: clamp(2.5rem, 5.6vw, 5.2rem); margin: 0; text-wrap: balance; }
+.hero-title { font-family: var(--hf); font-weight: var(--hw); letter-spacing: var(--hls); text-transform: var(--ht); line-height: 1.06; font-size: clamp(2.4rem, 4.2vw, 4.1rem); margin: 0; text-wrap: balance; }
 .hero-title .em { color: var(--em-color); }
 .hero-sub { margin: 0; font-size: 1.12rem; color: var(--muted); max-width: 34em; text-wrap: pretty; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -90,7 +90,8 @@ button { font: inherit; color: inherit; }
 .hero-visual { position: relative; }
 .photo { position: relative; overflow: hidden; background: var(--surface); border-radius: var(--r); aspect-ratio: 4 / 5; margin: 0; }
 .photo img { width: 100%; height: 100%; object-fit: cover; }
-.photo-empty { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 0.9rem; text-align: center; padding: 24px; }
+.photo-empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--muted); font-size: 0.85rem; text-align: center; padding: 24px; }
+.photo-mark { font-family: var(--hf); font-style: var(--em-style); font-size: clamp(3rem, 6vw, 5rem); line-height: 1; color: var(--accent); }
 .photo-inset { position: absolute; left: -6%; bottom: 14%; width: 34%; aspect-ratio: 3 / 4; border: 6px solid var(--bg); border-radius: var(--r); overflow: hidden; background: var(--surface); }
 .photo-inset img { width: 100%; height: 100%; object-fit: cover; }
 .photo-caption { margin-top: 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 0.86rem; color: var(--muted); }
@@ -223,7 +224,9 @@ button { font: inherit; color: inherit; }
 }
 @media (min-width: 980px) {
   .cards.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); }
+  .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.85fr); }
+  .hero-visual .photo { aspect-ratio: auto; height: min(68vh, 600px); }
+  .hero-visual .photo-inset { display: block; }
   .about-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
   .spec-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
   .spec-panel { position: sticky; top: calc(var(--header-h) + 24px); }

@@ -83,7 +83,7 @@
   }
   function photo(src, alt, extraClass) {
     if (src) return '<figure class="photo ' + (extraClass || '') + '"><img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="eager" decoding="async"></figure>';
-    return '<figure class="photo ' + (extraClass || '') + '" role="img" aria-label="' + esc(alt) + '"><div class="photo-empty">Foto profissional a ser enviada</div></figure>';
+    return '<figure class="photo ' + (extraClass || '') + '" role="img" aria-label="' + esc(alt) + '"><div class="photo-empty"><span class="photo-mark" aria-hidden="true">' + esc(initials) + '</span><span>Foto a ser enviada</span></div></figure>';
   }
 
   function sectionHero() {
