@@ -31,6 +31,24 @@ a{color:inherit;text-decoration-color:var(--line);text-underline-offset:3px}
 a:hover{color:var(--accent)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+.nwl-hero{display:grid;grid-template-columns:minmax(0,1fr);gap:0;align-items:stretch;background:var(--bg)}
+.nwl-hero-text{padding:clamp(40px,6vw,72px) clamp(20px,5vw,56px) clamp(40px,6vw,64px);display:flex;flex-direction:column;justify-content:center;gap:26px;order:1}
+.nwl-hero-media{margin:0;position:relative;aspect-ratio:4/5;order:2;background:var(--surface);overflow:hidden}
+.nwl-hero-photo{position:absolute;inset:0}
+.nwl-hero-inset{position:absolute;left:clamp(12px,3vw,40px);bottom:clamp(44px,5vw,64px);width:30%;aspect-ratio:3/4;border:6px solid var(--bg);background:var(--surface);overflow:hidden}
+.nwl-hero-cap{position:absolute;right:0;bottom:0;background:var(--bg);padding:10px 16px;font-size:0.8rem;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+@media (min-width:900px){
+  .nwl-hero{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);min-height:min(88vh,860px)}
+  .nwl-hero-text{order:1;padding:clamp(56px,7vw,104px) clamp(40px,5vw,88px) clamp(56px,7vw,104px) max(20px,calc((100vw - 1240px) / 2 + 56px))}
+  .nwl-hero-media{order:2;aspect-ratio:auto;min-height:100%}
+}
+.nwl-about{display:grid;grid-template-columns:minmax(0,1fr);gap:48px;max-width:1240px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,5vw,56px)}
+.nwl-about-media{margin:0}
+.nwl-about-photo{aspect-ratio:4/5;background:var(--surface);overflow:hidden}
+@media (min-width:900px){
+  .nwl-about{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(56px,8vw,120px);align-items:center}
+  .nwl-about-photo{aspect-ratio:3/4}
+}
 </style>
 </helmet>
 
@@ -95,36 +113,30 @@ a:hover{color:var(--accent)}
 
 <!-- 02 HERO -->
 <sc-if value="{{ show.hero }}" hint-placeholder-val="{{ true }}">
-<section id="inicio" data-screen-label="Hero" style="order:{{ ord.hero }};scroll-margin-top:84px;padding:clamp(40px,5vw,72px) 0 clamp(72px,9vw,120px)">
-  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:flex;flex-wrap:wrap;gap:clamp(40px,6vw,88px);align-items:flex-end">
-    <div style="flex:1.05 1 460px;min-width:0;display:flex;flex-direction:column;gap:24px;padding-bottom:clamp(0px,2vw,24px)">
-      <div style="font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:600">{{ hero.eyebrow }}</div>
-      <h1 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.04;font-size:clamp(2.4rem,4.4vw,4.1rem);margin:0;text-wrap:balance">{{ hero.title }}<em style="font-style:var(--em-style);color:var(--em-color)">{{ hero.titleEmphasis }}</em>{{ hero.titleAfter }}</h1>
-      <p style="margin:0;font-size:1.08rem;line-height:1.65;color:var(--muted);max-width:32em;text-wrap:pretty">{{ hero.description }}</p>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;flex-direction:{{ ctaDir }}">
-        <a href="{{ waMain }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 24px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--primary);color:var(--on-primary);font-weight:600;font-size:0.95rem;text-decoration:none;transition:background .2s" style-hover="background:var(--accent);color:var(--on-accent)">{{ hero.primaryCta }}<span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:18px;font-feature-settings:'liga'">arrow_outward</span></a>
-        <a href="{{ hero.secondaryHref }}" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 22px;border-radius:var(--btn-r);white-space:nowrap;flex:none;color:var(--ink);font-weight:500;font-size:0.95rem;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px" style-hover="color:var(--accent)">{{ hero.secondaryCta }}</a>
-      </div>
-      <sc-if value="{{ hero.hasBadges }}" hint-placeholder-val="{{ true }}">
-        <ul style="list-style:none;margin:8px 0 0;padding:20px 0 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 28px">
-          <sc-for list="{{ hero.badges }}" as="b" hint-placeholder-count="3">
-            <li style="display:flex;align-items:center;gap:8px;font-size:0.9rem;color:var(--ink)"><span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:20px;line-height:1;font-feature-settings:'liga';color:var(--accent)">{{ b.icon }}</span>{{ b.label }}</li>
-          </sc-for>
-        </ul>
-      </sc-if>
+<section id="inicio" data-screen-label="Hero" class="nwl-hero" style="order:{{ ord.hero }};scroll-margin-top:76px">
+  <div class="nwl-hero-text">
+    <p style="margin:0;font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:600">{{ hero.eyebrow }}</p>
+    <h1 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1;font-size:clamp(2.6rem,5.6vw,5.4rem);margin:0;text-wrap:balance">{{ hero.title }}<em style="font-style:var(--em-style);color:var(--em-color)">{{ hero.titleEmphasis }}</em>{{ hero.titleAfter }}</h1>
+    <p style="margin:0;font-size:1.08rem;line-height:1.65;color:var(--muted);max-width:30em;text-wrap:pretty">{{ hero.description }}</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;flex-direction:{{ ctaDir }}">
+      <a href="{{ waMain }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--primary);color:var(--on-primary);font-weight:600;font-size:0.95rem;text-decoration:none;transition:background .2s" style-hover="background:var(--accent);color:var(--on-accent)">{{ hero.primaryCta }}<span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:18px;font-feature-settings:'liga'">arrow_outward</span></a>
+      <a href="{{ hero.secondaryHref }}" style="display:inline-flex;align-items:center;min-height:52px;font-weight:500;font-size:0.95rem;color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px" style-hover="color:var(--accent)">{{ hero.secondaryCta }}</a>
     </div>
-    <figure style="flex:1 1 340px;max-width:540px;width:100%;position:relative;margin:0">
-      <div style="aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;background:var(--surface)">
-        <image-slot id="{{ img.hero.id }}" src="{{ img.hero.src }}" shape="rect" placeholder="Retrato profissional (4:5)"></image-slot>
-      </div>
-      <sc-if value="{{ hero.showSecondary }}" hint-placeholder-val="{{ true }}">
-        <div style="position:absolute;left:-8%;bottom:12%;width:34%;aspect-ratio:3/4;border-radius:var(--r);overflow:hidden;border:6px solid var(--bg);background:var(--surface)">
-          <image-slot id="{{ img.hero2.id }}" src="{{ img.hero2.src }}" shape="rect" placeholder="Foto secundária"></image-slot>
-        </div>
-      </sc-if>
-      <figcaption style="margin-top:14px;font-size:0.84rem;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span>{{ brand.name }}</span><span>{{ brand.crn }}</span></figcaption>
-    </figure>
+    <sc-if value="{{ hero.hasBadges }}" hint-placeholder-val="{{ true }}">
+      <ul style="list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border-top:1px solid var(--line)">
+        <sc-for list="{{ hero.badges }}" as="b" hint-placeholder-count="3">
+          <li style="display:flex;align-items:center;gap:10px;font-size:0.9rem;padding:16px 16px 0 0"><span aria-hidden="true" style="font-family:'Material Symbols Outlined';font-size:18px;line-height:1;font-feature-settings:'liga';color:var(--accent)">{{ b.icon }}</span>{{ b.label }}</li>
+        </sc-for>
+      </ul>
+    </sc-if>
   </div>
+  <figure class="nwl-hero-media">
+    <div class="nwl-hero-photo"><image-slot id="{{ img.hero.id }}" src="{{ img.hero.src }}" shape="rect" placeholder="Retrato profissional (4:5)"></image-slot></div>
+    <sc-if value="{{ hero.showSecondary }}" hint-placeholder-val="{{ true }}">
+      <div class="nwl-hero-inset"><image-slot id="{{ img.hero2.id }}" src="{{ img.hero2.src }}" shape="rect" placeholder="Foto secundária"></image-slot></div>
+    </sc-if>
+    <figcaption class="nwl-hero-cap"><span>{{ brand.name }}</span><span>{{ brand.crn }}</span></figcaption>
+  </figure>
 </section>
 </sc-if>
 
@@ -146,42 +158,37 @@ a:hover{color:var(--accent)}
 
 <!-- 04 SOBRE -->
 <sc-if value="{{ show.about }}" hint-placeholder-val="{{ true }}">
-<section id="sobre" data-screen-label="Sobre" style="order:{{ ord.about }};scroll-margin-top:84px;padding:clamp(72px,9vw,128px) 0">
-  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:grid;grid-template-columns:{{ cols.about }};gap:clamp(40px,7vw,112px);align-items:center">
-    <figure style="margin:0;display:flex;flex-direction:column;gap:14px">
-      <div style="aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;background:var(--surface)">
-        <image-slot id="{{ img.about.id }}" src="{{ img.about.src }}" shape="rect" placeholder="Foto profissional — consultório"></image-slot>
-      </div>
-      <figcaption style="font-size:0.85rem;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span>{{ brand.name }} · {{ brand.title }}</span><span>{{ brand.crn }}</span></figcaption>
-    </figure>
-    <div style="display:flex;flex-direction:column;gap:28px;min-width:0">
-      <div style="display:flex;align-items:center;gap:12px;font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:600">{{ about.eyebrow }}</div>
-      <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.08;font-size:clamp(2rem,3.6vw,3.2rem);margin:0;text-wrap:balance">{{ about.title }}</h2>
-      <div style="display:flex;flex-direction:column;gap:16px;color:var(--muted);font-size:1.05rem;max-width:36em">
-        <sc-for list="{{ about.story }}" as="p" hint-placeholder-count="2"><p style="margin:0;text-wrap:pretty">{{ p }}</p></sc-for>
-      </div>
-      <sc-if value="{{ about.hasApproach }}" hint-placeholder-val="{{ true }}">
-        <blockquote style="margin:4px 0;padding:0;display:flex;gap:16px">
-          <span aria-hidden="true" style="font-family:var(--hf);font-size:4rem;line-height:0.8;color:var(--accent)">“</span>
-          <p style="margin:0;font-family:var(--hf);font-style:var(--em-style);font-size:1.4rem;line-height:1.4;text-wrap:pretty">{{ about.approach }}</p>
-        </blockquote>
+<section id="sobre" data-screen-label="Sobre" class="nwl-about" style="order:{{ ord.about }};scroll-margin-top:76px">
+  <figure class="nwl-about-media">
+    <div class="nwl-about-photo"><image-slot id="{{ img.about.id }}" src="{{ img.about.src }}" shape="rect" placeholder="Foto profissional — consultório"></image-slot></div>
+    <figcaption style="margin-top:12px;font-size:0.84rem;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span>{{ brand.name }} · {{ brand.title }}</span><span>{{ brand.crn }}</span></figcaption>
+  </figure>
+  <div style="display:flex;flex-direction:column;gap:26px;min-width:0">
+    <p style="margin:0;font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:600">{{ about.eyebrow }}</p>
+    <h2 style="font-family:var(--hf);font-weight:var(--hw);letter-spacing:var(--hls);text-transform:var(--ht);line-height:1.05;font-size:clamp(2.1rem,3.8vw,3.4rem);margin:0;text-wrap:balance">{{ about.title }}</h2>
+    <div style="display:flex;flex-direction:column;gap:16px;color:var(--muted);font-size:1.05rem;max-width:36em">
+      <sc-for list="{{ about.story }}" as="p" hint-placeholder-count="2"><p style="margin:0;text-wrap:pretty">{{ p }}</p></sc-for>
+    </div>
+    <sc-if value="{{ about.hasApproach }}" hint-placeholder-val="{{ true }}">
+      <blockquote style="margin:8px 0 0;padding:4px 0 4px 24px;border-left:2px solid var(--accent)">
+        <p style="margin:0;font-family:var(--hf);font-style:var(--em-style);font-size:clamp(1.3rem,2vw,1.6rem);line-height:1.35;text-wrap:pretty">{{ about.approach }}</p>
+      </blockquote>
+    </sc-if>
+    <sc-if value="{{ about.hasEducation }}" hint-placeholder-val="{{ true }}">
+      <dl style="margin:0;border-top:1px solid var(--line)">
+        <sc-for list="{{ about.education }}" as="ed" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:minmax(110px,0.4fr) 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)">
+            <dt style="font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-top:2px">{{ ed.label }}</dt>
+            <dd style="margin:0">{{ ed.value }}</dd>
+          </div>
+        </sc-for>
+      </dl>
+    </sc-if>
+    <div style="display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center">
+      <a href="{{ waMain }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--primary);color:var(--on-primary);font-weight:600;text-decoration:none;transition:background .2s" style-hover="background:var(--accent);color:var(--on-accent)">{{ about.cta }}</a>
+      <sc-if value="{{ contact.hasInstagram }}" hint-placeholder-val="{{ true }}">
+        <a href="{{ contact.instagramUrl }}" target="_blank" rel="noopener" style="font-size:0.95rem;font-weight:500;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px">Acompanhar {{ contact.instagram }}</a>
       </sc-if>
-      <sc-if value="{{ about.hasEducation }}" hint-placeholder-val="{{ true }}">
-        <dl style="margin:0;border-top:1px solid var(--line)">
-          <sc-for list="{{ about.education }}" as="ed" hint-placeholder-count="3">
-            <div style="display:grid;grid-template-columns:minmax(110px,0.4fr) 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)">
-              <dt style="font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-top:2px">{{ ed.label }}</dt>
-              <dd style="margin:0">{{ ed.value }}</dd>
-            </div>
-          </sc-for>
-        </dl>
-      </sc-if>
-      <div style="display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center">
-        <a href="{{ waMain }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 24px;border-radius:var(--btn-r);white-space:nowrap;flex:none;background:var(--primary);color:var(--on-primary);font-weight:600;text-decoration:none;transition:transform .25s" style-hover="transform:translateY(-2px);color:var(--on-primary)">{{ about.cta }}</a>
-        <sc-if value="{{ contact.hasInstagram }}" hint-placeholder-val="{{ true }}">
-          <a href="{{ contact.instagramUrl }}" target="_blank" rel="noopener" style="font-size:0.95rem;font-weight:500">Acompanhar {{ contact.instagram }}</a>
-        </sc-if>
-      </div>
     </div>
   </div>
 </section>
